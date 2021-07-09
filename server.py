@@ -1,6 +1,4 @@
 #! /usr/bin/env python3
-import sys
-
 from yhttp import Application, text
 
 
