@@ -4,6 +4,8 @@ import Icons from './Icons.svelte';
 import Dial from './Dial.svelte';
 import NotFound from './NotFound.svelte';
 
+export let title;
+
 const routes = [
     { title: 'Dial', component: Dial, path: '/',     icon: 'pacman'     },
 ];
@@ -35,11 +37,15 @@ function changeComponent(event) {
 
 </script>
 
-<style type="text/sass" global>
+<style lang="sass" type="text/sass" global>
+
+.body
+  background-color: $bg-light
+  height: 100%
 </style>
 
-
 <Icons />
+<div class="all10 body" >
 <!-- Content -->
 <svelte:component this={selected.component}/>
-
+</div>

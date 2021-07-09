@@ -1,3 +1,4 @@
+
 .row 
   position: relative
   &::after
@@ -28,12 +29,6 @@
       @include column
       width: 33.33%
 
-    .mobile
-      @if nth($size, 1) == 0
-        display: block
-      @else
-        display: none !important 
-
     @for $i from 1 through 10
       .#{$name}#{$i} 
         @include column
@@ -55,3 +50,15 @@
 
   .p#{$i}
     padding: $gutter * $i
+
+  .pr#{$i}
+    padding-right: $gutter * $i
+
+  .pl#{$i}
+    padding-left: $gutter * $i
+
+  .pt#{$i}
+    padding-top: $gutter * $i
+
+  .pb#{$i}
+    padding-bottom: $gutter * $i
