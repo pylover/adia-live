@@ -14,14 +14,12 @@ function click() {
 }
 
 </script>
-<style type="text/sass" global>
-@import 'styles/global.sass'
+<style lang="sass" type="text/sass" global>
 
 button
   float: left
-  padding: 6px
-  margin-right: $gutter
   height: 32px
+  width: 32px
   line-height: 18px
   vertical-align: middle
   svg
