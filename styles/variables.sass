@@ -5,23 +5,20 @@ $fg: #e7e8eb
 $jingool: #f48224
 $mangool: #5a9e70
 
-$border-color: #fdfdfd
+$border-color: #696969
 $border-focus-color: #fdfdfd
-/* Grid */
-$gutter: 8px
 
-$devices:                     ("sm": (   0px,  768px, 15px))
-$devices: map-merge($devices, ("md": ( 768px, 1024px, 14px)))
-$devices: map-merge($devices, ("lg": (1024px, 1200px, 13px)))
-$devices: map-merge($devices, ("xg": (1200px, 4096px, 13px)))
-$colshadow: none
-//$colshadow: inset 0 0 1px #0f0; 
+/* Debug */
+$debug: inset 0 0 1px #0f0; 
 
 /* Font */
 $font: Helvetica
 
 /* Nav */
-$nav-icon-size: 28px
+$navheight: 48px
+
+/* Gutter */
+$gutter: 10px
 
 @mixin grayscale
   -webkit-filter: grayscale(100%)
