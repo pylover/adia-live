@@ -43,36 +43,35 @@
   }
 </script>
 
-<style>
-  .wrapper {
-    width: 100%;
-    height: 100%;
-    display: inline-flex;
-  }
-  .separator {
-    cursor: col-resize;
-    height: 100%;
-    width: 5px;
-    z-index: 1;
-  }
-  .left {
-    width: 30%;
-    min-width: 100px;
-    height: 100%;
-  }
-  .right {
-    width: 70%;
-    min-width: 100px;
-    height: 100%;
-    background-color: #fff;
-  }
-  textarea {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    border: none;
-    outline: 1px solid #000;
-    color: #fff;
-  }
+<style type="text/sass">
+.wrapper
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+
+.separator
+  cursor: col-resize;
+  height: 100%;
+  width: 5px;
+  z-index: 1;
+
+.left
+  width: 30%;
+  min-width: 100px;
+  height: 100%;
+
+.right
+  width: 70%;
+  min-width: 100px;
+  height: 100%;
+  background-color: $bg-light;
+
+textarea
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: $bg-dark;
+  border: none;
+  outline: 1px solid $bg-dark;
+  color: $fg;
 </style>
