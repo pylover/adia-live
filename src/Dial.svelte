@@ -1,3 +1,7 @@
+<nav>
+  <Button icon="pacman" />
+</nav>
+
 <div
   class="wrapper">
   <div
@@ -19,6 +23,8 @@
 </div>
 
 <script>
+  import Button from './Button.svelte'
+
   let lastSeparatorLocation, left, right
   
   function resizeStart(e) {
