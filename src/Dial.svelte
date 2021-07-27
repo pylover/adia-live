@@ -31,9 +31,7 @@
   import Button from './Button.svelte'
 
   let lastSeparatorLocation, left, right, innerWidth, leftWidth
-
   let leftSize = localStorage.getItem("leftSize") ? `${localStorage.getItem("leftSize")}%` : '30%'
-
   let rightSize = localStorage.getItem("leftSize") ? `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
 
   function resizeStart(e) {
