@@ -1,3 +1,5 @@
+<svelte:window bind:innerWidth />
+
 <nav>
   <Button icon="pacman" />
 </nav>
@@ -6,6 +8,8 @@
   class="wrapper">
   <div
     bind:this={left}
+    bind:clientWidth={leftWidth}
+    style="--left-size: {leftSize}"
     class="left">
     <textarea></textarea>
   </div>
@@ -18,6 +22,7 @@
 
   <div
     bind:this={right}
+    style="--right-size: {rightSize}"
     class="right">
   </div>
 </div>
@@ -25,8 +30,10 @@
 <script>
   import Button from './Button.svelte'
 
-  let lastSeparatorLocation, left, right
-  
+  let lastSeparatorLocation, left, right, innerWidth, leftWidth
+  let leftSize = localStorage.getItem("leftSize") ? `${localStorage.getItem("leftSize")}%` : '30%'
+  let rightSize = localStorage.getItem("leftSize") ? `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
+
   function resizeStart(e) {
     lastSeparatorLocation = {
       e,
@@ -46,7 +53,8 @@
     }
   }
 
-  function resizeStop (e) {
+  function resizeStop () {
+    localStorage.setItem("leftSize", Math.round(leftWidth / (innerWidth - 14) * 100))
     window.removeEventListener("mousemove", resize)
   }
 </script>
@@ -64,12 +72,12 @@
   z-index: 1
 
 .left
-  width: 30%
+  width: var(--left-size)
   min-width: 100px
   height: 100%
 
 .right
-  width: 70%
+  width: var(--right-size)
   min-width: 100px
   height: 100%
   background-color: $bg-light
