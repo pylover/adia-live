@@ -1,13 +1,13 @@
 <script>
 import Icons from './Icons.svelte';
 
-import Dial from './Dial.svelte';
+import ADia from './ADia.svelte';
 import NotFound from './NotFound.svelte';
 
 export let title;
 
 const routes = [
-    { title: 'Dial', component: Dial, path: '/',     icon: 'pacman'     },
+    { title: 'Adia', component: ADia, path: '/',     icon: 'pacman'     },
 ];
 
 const notFound = {
