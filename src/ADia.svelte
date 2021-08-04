@@ -70,6 +70,7 @@
   height: 100%
   width: $gutter
   z-index: 1
+  background-color: $bg-light
 
 .left
   width: var(--left-size)
