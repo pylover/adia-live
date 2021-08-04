@@ -75,6 +75,7 @@
   width: var(--left-size)
   min-width: 100px
   height: 100%
+  background-color: $bg-light
 
 .right
   width: var(--right-size)
