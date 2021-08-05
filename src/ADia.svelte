@@ -11,7 +11,11 @@
     bind:clientWidth={leftWidth}
     style="--left-size: {leftSize}"
     class="left">
-    <textarea></textarea>
+    <textarea
+      on:click={saveText}
+      on:keyup={stopTyping}
+      on:keydown={startTyping}
+      bind:value={text}></textarea>
   </div>
 
   <div
@@ -29,8 +33,17 @@
 
 <script>
   import Button from './Button.svelte'
+  import { onMount } from 'svelte'
 
-  let lastSeparatorLocation, left, right, innerWidth, leftWidth
+  let lastSeparatorLocation,
+      left,
+      right,
+      innerWidth,
+      leftWidth,
+      text,
+      typingTimer,
+      doneTypingInterval = 2000
+
   let leftSize = localStorage.getItem("leftSize") ? `${localStorage.getItem("leftSize")}%` : '30%'
   let rightSize = localStorage.getItem("leftSize") ? `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
 
@@ -57,6 +70,23 @@
     localStorage.setItem("leftSize", Math.round(leftWidth / (innerWidth - 14) * 100))
     window.removeEventListener("mousemove", resize)
   }
+
+  function stopTyping () {
+    clearTimeout(typingTimer)
+    typingTimer = setTimeout(saveText, doneTypingInterval)
+  }
+
+  function startTyping () {
+    clearTimeout(typingTimer)
+  }
+
+  function saveText () {
+    localStorage.setItem("editorText", text)
+  }
+
+  onMount(() => {
+    text = localStorage.getItem("editorText") !== 'null' ? localStorage.getItem("editorText") : ''
+	})
 </script>
 
 <style type="text/sass">
