@@ -92,7 +92,7 @@
 <style type="text/sass">
 .wrapper
   width: 100%
-  height: 100%
+  height: calc(100% - 50px)
   display: inline-flex
 
 .separator
@@ -111,6 +111,8 @@
   min-width: 100px
   height: 100%
   background-color: $bg-light
+  overflow-y: auto
+  overflow-x: hidden
 
 textarea
   display: block
