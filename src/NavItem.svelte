@@ -14,6 +14,9 @@ function click() {
 	});
 }
 
+if (target != undefined && target.startsWith('/')) {
+  target = basePath + target
+}
 </script>
 <style lang="sass" type="text/sass">
 
