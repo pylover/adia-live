@@ -1,10 +1,7 @@
 <svelte:window bind:innerWidth />
 
 <nav>
-  <NavItem title="ADia" icon="pacman" target="/about" />
-  <NavItem icon="github" 
-           style="float: right"
-           target="https://github.com/pylover/adia" />
+  <slot></slot>
 </nav>
 
 <div
