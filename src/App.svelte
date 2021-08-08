@@ -61,8 +61,13 @@ nav
 <div class="all10 body" >
 <!-- Content -->
 <svelte:component this={selected.component}>
-  <NavItem title="ADia" icon="pacman" target="/doc/latest" />
-  <NavItem icon="github" 
+  <NavItem title="ADia" icon="pacman" target="/about" />
+  <NavItem title="Documentation" 
+           icon="question" 
+           style="float: right"
+           target="/docs/latest" />
+  <NavItem title="Source Code"
+           icon="github" 
            style="float: right"
            target="https://github.com/pylover/adia" />
 </svelte:component>

@@ -30,8 +30,8 @@ a
     float: left
   svg
     width: $navheight
-    margin-top: $navheight * .2
-    height: $navheight * .6
+    margin-top: $navheight * .25
+    height: $navheight * .5
   span
     margin-right: $gutter
 
