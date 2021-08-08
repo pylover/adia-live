@@ -47,9 +47,17 @@ export default {
       preprocess: preprocess({
         sass: {
           sourceMap: !production,
-          prependData: `@import './styles/global.sass';`
+          prependData: `@import './styles/variables.sass';`
         }
-      })
+      }),
+      // Example of how to ignore warnings.
+      //onwarn: (warning, handler) => {
+      //  const { code, frame } = warning;
+      //  if (code === "css-unused-selector") {
+      //    return;
+      //  }
+      //  handler(warning);
+      //},
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance

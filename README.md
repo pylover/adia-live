@@ -14,4 +14,7 @@ make env
 make serve
 ```
 
+## Contribution
 
+- Maximum line width: 79 characters.
+- Single qoute for string literals: `'` (`'foo'`)

@@ -37,10 +37,21 @@ function changeComponent(event) {
 </script>
 
 <style lang="sass" type="text/sass" global>
+@import 'styles/bazak'
 
 .body
   background-color: $bg-light
   height: 100%
+
+nav
+  background-color: $bg-dark
+  width: 100%
+  display: block
+  height: $navheight
+  border-style: inset
+  border-bottom: 1px solid black
+  padding-right: $gutter
+
 </style>
 
 <Icons />

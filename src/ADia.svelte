@@ -2,8 +2,7 @@
 
 <nav>
   <NavItem title="ADia" icon="pacman" target="/about" />
-  <NavItem icon="github" cssClass="far" />
-  <NavItem icon="question" cssClass="far" />
+  <NavItem icon="github" style="float: right" />
 </nav>
 
 <div
@@ -46,8 +45,10 @@
       typingTimer,
       doneTypingInterval = 2000
 
-  let leftSize = localStorage.getItem("leftSize") ? `${localStorage.getItem("leftSize")}%` : '30%'
-  let rightSize = localStorage.getItem("leftSize") ? `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
+  let leftSize = localStorage.getItem("leftSize") ? 
+    `${localStorage.getItem("leftSize")}%` : '30%'
+  let rightSize = localStorage.getItem("leftSize") ? 
+    `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
 
   function resizeStart(e) {
     lastSeparatorLocation = {
@@ -69,7 +70,9 @@
   }
 
   function resizeStop () {
-    localStorage.setItem("leftSize", Math.round(leftWidth / (innerWidth - 14) * 100))
+    localStorage.setItem("leftSize", 
+      Math.round(leftWidth / (innerWidth - 14) * 100)
+    )
     window.removeEventListener("mousemove", resize)
   }
 
@@ -87,11 +90,13 @@
   }
 
   onMount(() => {
-    text = localStorage.getItem("editorText") !== 'null' ? localStorage.getItem("editorText") : ''
+    text = localStorage.getItem("editorText") !== 'null' ? 
+      localStorage.getItem("editorText") : ''
 	})
 </script>
 
 <style type="text/sass">
+
 .wrapper
   width: 100%
   height: calc(100% - #{$navheight})
@@ -135,4 +140,5 @@ textarea
   outline: 1px solid $bg-dark
   color: $fg
   resize: none
+
 </style>
