@@ -14,7 +14,7 @@ jobs:
         make env
     - name: Build
       run: |
-        make html
+        make build
         touch public/.nojekyll 
     - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
