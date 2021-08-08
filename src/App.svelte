@@ -1,6 +1,7 @@
 <script>
 import Icons from './Icons.svelte';
 import NavItem from './NavItem.svelte'
+import Logo from './Logo.svelte'
 import ADia from './ADia.svelte';
 import About from './About.svelte';
 import NotFound from './NotFound.svelte';
@@ -61,14 +62,9 @@ nav
 <div class="all10 body" >
 <!-- Content -->
 <svelte:component this={selected.component}>
-  <NavItem title="ADia" icon="pacman" target="/about" />
-  <NavItem title="Documentation" 
-           icon="question" 
+  <Logo icon="pacman" target="/" />
+  <NavItem icon="question" 
            style="float: right"
-           target="/docs/latest" />
-  <NavItem title="Source Code"
-           icon="github" 
-           style="float: right"
-           target="https://github.com/pylover/adia" />
+           target="/about" />
 </svelte:component>
 </div>
