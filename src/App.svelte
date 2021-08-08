@@ -2,11 +2,12 @@
 import Icons from './Icons.svelte';
 
 import ADia from './ADia.svelte';
+import About from './About.svelte';
 import NotFound from './NotFound.svelte';
 
 const routes = [
-    { title: 'Adia',  component: ADia, path: '/',    },
-    { title: 'Index', component: ADia, path: '/index'},
+    { title: 'Adia',  component: ADia,  path: '/',    },
+    { title: 'About', component: About, path: '/about'},
 ];
 
 const notFound = {

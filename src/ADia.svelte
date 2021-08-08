@@ -1,8 +1,9 @@
 <svelte:window bind:innerWidth />
 
 <nav>
-  <NavItem icon="question" />
-  <NavItem icon="pacman" />
+  <NavItem title="ADia" icon="pacman" target="/about" />
+  <NavItem icon="github" cssClass="far" />
+  <NavItem icon="question" cssClass="far" />
 </nav>
 
 <div
@@ -106,6 +107,7 @@
   width: var(--left-size)
   min-width: 100px
   height: 100%
+  border-top: 1px solid black
 
 .right
   width: var(--right-size)
@@ -120,6 +122,9 @@ nav
   width: 100%
   display: block
   height: $navheight
+  border-style: inset
+  border-bottom: 1px solid black
+  padding-right: $gutter
 
 textarea
   display: block

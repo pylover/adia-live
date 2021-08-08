@@ -1,8 +1,9 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 export let title = '';
+export let target;
 export let icon;
-export let cls = '';
+export let cssClass = '';
 export let id = '';
 export let style = '';
 const dispatch = createEventDispatcher();
@@ -14,47 +15,32 @@ function click() {
 }
 
 </script>
-<style lang="sass" type="text/sass" global>
+<style lang="sass" type="text/sass">
 
-button
-  // Bazak
-  background-color: $bg-dark
-  color: $fg
-  cursor: pointer
-  box-shadow: inset 0 0 1px $bg-dark
-  svg
-    fill: $fg
-  &:hover
-    box-shadow: inset 0 0 1px $mangool
-    svg
-      fill: $mangool
-  &:focus
-    box-shadow: inset 0 0 1px $fg
-  &:active
-    background-color: $bg-dark
-
+a
   // Doozak
-  float: left
   height: $navheight
-  width: $navheight
-  line-height: 18px
+  line-height: $navheight 
   vertical-align: middle
   overflow: hidden
-  border: none
-  outline: none
-  border-radius: 3px
-  svg
-    display: block
+  > *
     float: left
-    width: 100%
-    height: 100%
+  svg
+    width: $navheight
+    margin-top: $navheight * .2
+    height: $navheight * .6
   span
-    margin-left: $gutter
+    margin-right: $gutter
+
+.lpad
+  margin-left: $gutter
 
 </style> 
-<button class={cls} {id} {style} on:click={click}>
-  <svg><use xlink:href={"#icon-" + icon}></use></svg>
-  {#if title}
-    <span>{title}</span>
+<a class={cssClass} {id} {style} href={target} on:click={click}>
+  {#if icon}
+    <svg><use xlink:href={"#icon-" + icon}></use></svg>
   {/if}
-</button>
+  {#if title}
+    <span class={icon == null ? 'lpad': ''}>{title}</span>
+  {/if}
+</a>
