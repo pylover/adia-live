@@ -2,7 +2,9 @@
 
 <nav>
   <NavItem title="ADia" icon="pacman" target="/about" />
-  <NavItem icon="github" style="float: right" />
+  <NavItem icon="github" 
+           style="float: right"
+           target="https://github.com/pylover/adia" />
 </nav>
 
 <div
