@@ -35,8 +35,8 @@ button
 
   // Doozak
   float: left
-  height: 48px
-  width: 48px
+  height: $navheight
+  width: $navheight
   line-height: 18px
   vertical-align: middle
   overflow: hidden

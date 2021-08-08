@@ -1,7 +1,8 @@
 <svelte:window bind:innerWidth />
 
 <nav>
-  <Button icon="pacman" />
+  <NavItem icon="question" />
+  <NavItem icon="pacman" />
 </nav>
 
 <div
@@ -32,7 +33,7 @@
 </div>
 
 <script>
-  import Button from './Button.svelte'
+  import NavItem from './NavItem.svelte'
   import { onMount } from 'svelte'
 
   let lastSeparatorLocation,
@@ -92,7 +93,7 @@
 <style type="text/sass">
 .wrapper
   width: 100%
-  height: calc(100% - 50px)
+  height: calc(100% - #{$navheight})
   display: inline-flex
 
 .separator
@@ -113,6 +114,12 @@
   background-color: $bg-light
   overflow-y: auto
   overflow-x: hidden
+
+nav
+  background-color: $bg-dark
+  width: 100%
+  display: block
+  height: $navheight
 
 textarea
   display: block
