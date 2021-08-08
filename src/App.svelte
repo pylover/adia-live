@@ -4,8 +4,6 @@ import Icons from './Icons.svelte';
 import ADia from './ADia.svelte';
 import NotFound from './NotFound.svelte';
 
-export let title;
-
 const routes = [
     { title: 'Adia', component: ADia, path: '/',     icon: 'pacman'     },
 ];
