@@ -5,8 +5,9 @@ import ADia from './ADia.svelte';
 import About from './About.svelte';
 import NotFound from './NotFound.svelte';
 
+
 const routes = [
-    { title: 'Adia',  component: ADia,  path: '/',    },
+  { title: 'Adia',  component: ADia,  path: `/`    },
     { title: 'About', component: About, path: '/about'},
 ];
 
@@ -15,7 +16,9 @@ const notFound = {
   component: NotFound,
 }
 
-let selectedIndex = routes.findIndex(e => e.path == window.location.pathname)
+let selectedIndex = routes.findIndex(
+  e => (basePath + e.path) == window.location.pathname
+)
 let selected = routes[selectedIndex];
 if (selectedIndex < 0) {
   selected = notFound;
