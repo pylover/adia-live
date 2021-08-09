@@ -58,7 +58,9 @@ a
 
 .main-wrapper
   background-color: $bg-light
-  height: 100%
+  min-height: 100%
+  width: 100%
+  float: left
 
 nav
   background-color: $bg-dark
@@ -72,7 +74,6 @@ nav
 </style>
 
 <Icons />
-<div class="main-wrapper" >
 <!-- Content -->
 <svelte:component this={selected.component}>
   <Logo target="/" />
@@ -80,4 +81,3 @@ nav
            style="float: right"
            target="https://github.com/pylover/adia" />
 </svelte:component>
-</div>

@@ -1,5 +1,6 @@
 <svelte:window bind:innerWidth />
 
+<div class="main-wrapper" >
 <nav>
   <slot></slot>
   <NavItem icon="question" 
@@ -15,9 +16,8 @@
     style="--left-size: {leftSize}"
     class="left">
     <textarea
-      on:click={saveText}
-      on:keyup={stopTyping}
-      on:keydown={startTyping}
+      on:keydown={textChanged}
+      on:paste={textChanged}
       bind:value={text}></textarea>
   </div>
 
@@ -31,7 +31,9 @@
     bind:this={right}
     style="--right-size: {rightSize}"
     class="right">
+    <textarea disabled>{ diagram }</textarea>
   </div>
+</div>
 </div>
 
 <script>
@@ -43,14 +45,19 @@
       right,
       innerWidth,
       leftWidth,
-      text,
       typingTimer,
-      doneTypingInterval = 2000
+      doneTypingInterval = 1000
 
   let leftSize = localStorage.getItem("leftSize") ? 
     `${localStorage.getItem("leftSize")}%` : '30%'
   let rightSize = localStorage.getItem("leftSize") ? 
     `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
+  let text = `
+diagram: foo
+
+sequence:
+foo -> bar: helloworld()!`;
+  let diagram = '';
 
   function resizeStart(e) {
     lastSeparatorLocation = {
@@ -78,26 +85,39 @@
     window.removeEventListener("mousemove", resize)
   }
 
-  function stopTyping () {
-    clearTimeout(typingTimer)
-    typingTimer = setTimeout(saveText, doneTypingInterval)
-  }
-
-  function startTyping () {
-    clearTimeout(typingTimer)
-  }
-
-  function saveText () {
-    localStorage.setItem("editorText", text)
-  }
-
-  onMount(() => {
-    text = localStorage.getItem("editorText") !== 'null' ? 
-      localStorage.getItem("editorText") : ''
+  onMount(function() {
+    let localText = localStorage.getItem("editorText")
+    if (localText != null && localText.trim().length > 0) {
+      text = localText;
+    }
+    refresh();
 	})
+  
+  function refresh() {
+    if (text.trim().length <= 0) {
+      diagram = '';
+      return;
+    }
+    if (window.adiaDiagram == undefined) {
+      setTimeout(refresh, 200);
+      return;
+    }
+    console.log('Reloading')
+    localStorage.setItem("editorText", text)
+    diagram = window.adiaDiagram(text)
+  }
+  
+  function textChanged(ev) {
+    clearTimeout(typingTimer)
+    typingTimer = setTimeout(refresh, doneTypingInterval)
+    console.log('Text Changed');
+  }
 </script>
 
 <style type="text/sass">
+
+.main-wrapper
+  height: 100% !important
 
 .wrapper
   width: 100%
@@ -142,5 +162,4 @@ textarea
   outline: 1px solid $bg-dark
   color: $fg
   resize: none
-
 </style>

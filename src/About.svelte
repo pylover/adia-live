@@ -1,3 +1,5 @@
+
+<div class="main-wrapper" >
 <nav>
   <slot></slot>
   <NavItem icon="paint" 
@@ -27,7 +29,7 @@
     Javascript releases
     <hr />
   </h4>
-  <div class="sm10 md5 lg5 xg5">
+  <div class="sm10 md3 lg3 xg3">
   <h5>Bundle</h5>
   <ul class="all10">
   {#each jsDists as v, i}
@@ -42,17 +44,20 @@
   {/each}
   </ul>
   </div>
-  <div class="sm10 md5 lg5 xg5">
+  <div class="sm10 md7 lg7 xg7">
   <h5>Brython Module</h5>
   <ul class="all10">
   {#each jsDists as v, i}
     <li>
       <a href="{baseUrl}/jsdist/{v}/adia-{v}.js">
         adia-{v}.js
-        {#if i == 0}
-          <i> (latest) </i>
-        {/if}
       </a>
+      <a href="{baseUrl}/jsdist/{v}/adia-{v}.js">
+        adia.lib-{v}.js
+      </a>
+      {#if i == 0}
+        <i> (latest) </i>
+      {/if}
     </li>
   {/each}
   </ul>
@@ -64,6 +69,7 @@
     </div>
   {/if}
   -->
+</div>
 </div>
 
 <style type="text/sass" scoped>
@@ -82,8 +88,8 @@ const baseUrl = basePath;
 onMount(async () => {
   try {
     let [js, doc] = await Promise.all([
-        fetch(`${basePath}/jsdist/index.json`).then(resp => resp.json()),
-        fetch(`${basePath}/docs/index.json`).then(resp => resp.json()),
+        fetch(`${basePath}/jsdist/index.json?count=10`).then(resp => resp.json()),
+        fetch(`${basePath}/docs/index.json?count=9`).then(resp => resp.json()),
       ]);
     jsDists = js;
     docDists = doc;
