@@ -1,5 +1,7 @@
 # ADia demo page
 
+[![Deploy](https://github.com/pylover/adia-live/actions/workflows/deploy.yml/badge.svg)](https://github.com/pylover/adia-live/actions/workflows/deploy.yml)
+
 ## Get started
 
 Install the dependencies...
