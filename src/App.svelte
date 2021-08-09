@@ -62,7 +62,7 @@ nav
 <div class="all10 body" >
 <!-- Content -->
 <svelte:component this={selected.component}>
-  <Logo icon="pacman" target="/" />
+  <Logo target="/" />
   <NavItem icon="question" 
            style="float: right"
            target="/about" />
