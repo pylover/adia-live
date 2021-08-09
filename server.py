@@ -6,9 +6,6 @@ app = Application()
 
 
 @app.route('/(?:docs|jsdist)/index.json')
-@validate(fields=dict(
-    count=dict(type_=int),
-))
 @json
 def get(req, *, count=5):
     return list(f'0.{i}' for i in range(int(count), 0, -1))
