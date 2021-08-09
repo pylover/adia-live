@@ -23,3 +23,17 @@ jobs:
         BRANCH: gh-pages
         FOLDER: public
         CLEAN: true
+
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        token: ${{ secrets.PAT }}
+        branch: gh-pages
+        folder: public
+        clean: false
+        repository-name: pylover/adia
+        clean-exclude: |
+          jsdist/*
+          docs/*
+
+
+ 
