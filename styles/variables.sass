@@ -19,3 +19,11 @@ $navheight: 48px
 
 /* Gutter */
 $gutter: 10px
+
+/* Grid */
+$devices:                     ("sm": (   0px,  768px, 15px))
+$devices: map-merge($devices, ("md": ( 768px, 1024px, 14px)))
+$devices: map-merge($devices, ("lg": (1024px, 1200px, 13px)))
+$devices: map-merge($devices, ("xg": (1200px, 4096px, 13px)))
+
+

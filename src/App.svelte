@@ -41,9 +41,22 @@ function changeComponent(event) {
 </script>
 
 <style lang="sass" type="text/sass" global>
-@import 'styles/bazak'
 
-.body
+body
+  color: $fg
+
+a
+  color: $fg
+  cursor: pointer
+  &:hover
+    color: $mangool
+    svg
+      fill: $mangool
+
+  svg
+    fill: $fg
+
+.main-wrapper
   background-color: $bg-light
   height: 100%
 
@@ -59,12 +72,12 @@ nav
 </style>
 
 <Icons />
-<div class="all10 body" >
+<div class="main-wrapper" >
 <!-- Content -->
 <svelte:component this={selected.component}>
   <Logo target="/" />
-  <NavItem icon="question" 
+  <NavItem icon="github" 
            style="float: right"
-           target="/about" />
+           target="https://github.com/pylover/adia" />
 </svelte:component>
 </div>

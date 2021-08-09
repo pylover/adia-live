@@ -2,6 +2,9 @@
 
 <nav>
   <slot></slot>
+  <NavItem icon="question" 
+           style="float: right"
+           target="/about" />
 </nav>
 
 <div
