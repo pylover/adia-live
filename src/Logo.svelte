@@ -23,5 +23,5 @@ a
 </style> 
 <a href={target}>
   <svg><use xlink:href="#icon-pacman"></use></svg>
-  <h1>ADia</h1>
+  <h1>ADia Live Demo</h1>
 </a>

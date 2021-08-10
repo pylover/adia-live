@@ -6,8 +6,9 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import preprocess from 'svelte-preprocess';
 import replace from "@rollup/plugin-replace";
-
 const production = !process.env.ROLLUP_WATCH;
+
+const packageJson = require('./package.json');
 
 /* https://stackoverflow.com/a/68725785/680372 */
 const warnIgnores = {
@@ -115,7 +116,8 @@ export default {
     // In gh-pages environment, router should offset paths by basePath.
     replace({
       preventAssignment: true,
-      basePath: JSON.stringify(production? '/adia': '')
+      basePath: JSON.stringify(production? '/adia': ''),
+      appVersion: packageJson.version 
     }),
 	],
 	watch: {

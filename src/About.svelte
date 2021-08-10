@@ -8,6 +8,14 @@
 </nav>
 
 <div id="about" class="sm10 md10 lg8 xg6">
+   <h4 class="all10">
+    About
+    <hr />
+  </h4>
+  <p class="all10">
+  ADia live demo page <i>version: appVersion</i> using javascript and 
+    <a href="https://brython.info">Brython</a>.
+  </p>
   <h4 class="all10">
     Documentation
     <hr />
@@ -62,6 +70,19 @@
   {/each}
   </ul>
   </div>
+  <h4 class="all10">
+    Source Codes
+    <hr />
+  </h4>
+  <div class="all10">
+    <ul>
+      {#each repos as repo}
+        <li>
+          <a href="{repo}">{repo}</a>
+        </li>
+      {/each}
+    </ul>
+  </div>
   <!--
   {#if loadingError}
     <div>
@@ -80,6 +101,10 @@
 import NavItem from './NavItem.svelte'
 import { onMount } from 'svelte';
 
+const repos = [
+  'https://github.com/pylover/adia',
+  'https://github.com/pylover/adia-live',
+];
 let loadingError;
 let jsDists = [];
 let docDists = [];
