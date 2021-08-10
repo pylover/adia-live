@@ -31,12 +31,6 @@ $colshadow: none
       @include column
       width: 33.33%
 
-    .mobile
-      @if nth($size, 1) == 0
-        display: block
-      @else
-        display: none !important 
-
     @for $i from 1 through 10
       .#{$name}#{$i} 
         @include column
@@ -56,6 +50,6 @@ $colshadow: none
     @include column
     width: 33.33%
 
-  .p#{$i}
+  .pad#{$i}
     padding: $gutter * $i
 

@@ -9,6 +9,22 @@ import replace from "@rollup/plugin-replace";
 
 const production = !process.env.ROLLUP_WATCH;
 
+/* https://stackoverflow.com/a/68725785/680372 */
+const warnIgnores = {
+  'css-unused-selector': {
+    capture: /.*"(.*)"$/,
+    ignore: [
+      /^\.pad\d+/,
+      /^\.sm\d+/,
+      /^\.md\d+/,
+      /^\.lg\d+/,
+      /^\.xg\d+/,
+      /^\.all\d+/,
+      /^\.row(::after)?/
+    ]
+  }
+}
+
 
 function serve() {
 	let server = null;
@@ -51,15 +67,24 @@ export default {
           prependData: `@import './styles/variables.sass';`
         }
       }),
-      // Example of how to ignore warnings.
-      //onwarn: (warning, handler) => {
-      //  const { code, frame } = warning;
-      //  if (code === "css-unused-selector") {
-      //    return;
-      //  }
-      //  handler(warning);
-      //},
-		}),
+      // Explicitely ignore warnings
+      onwarn: (warning, handler) => {
+        const { message, code } = warning;
+        const patterns = warnIgnores[code];
+        if (patterns != undefined) {
+          /* Find the meat. */
+          const meat = message.match(patterns.capture);
+          if (meat != null) {
+            for (var i = 0; i < patterns.ignore.length; i++) {
+              if (meat[1].match(patterns.ignore[i]) != null) {
+                return;
+              }
+            }
+          }
+        }
+        handler(warning);
+      },
+    }),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
