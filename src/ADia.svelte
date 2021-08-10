@@ -97,16 +97,15 @@ foo -> bar: helloworld()!`;
 	})
   
   function refresh() {
-    if (text.trim().length <= 0) {
-      diagram = '';
-      return;
-    }
     if (window.adiaDiagram == undefined) {
       setTimeout(refresh, 200);
       return;
     }
-    console.log('Reloading')
     localStorage.setItem("editorText", text)
+    if (text.trim().length <= 0) {
+      diagram = '';
+      return;
+    }
     diagram = window.adiaDiagram(text)
   }
   
