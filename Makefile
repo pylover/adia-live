@@ -15,7 +15,7 @@ env:
 	npm install
 
 .PHONY: serve
-serve:
+serve: adia
 	npm run dev
 
 public/brython.js:
@@ -29,4 +29,10 @@ public/adia.js:
 
 .PHONY: adia
 adia: public/brython.js public/adia.lib.js public/adia.js
+
+clean::
+	-rm public/brython.js
+	-rm public/adia.lib.js
+	-rm public/adia.js
+
 
