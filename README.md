@@ -1,22 +1,32 @@
-# ADia demo page
+# ADia live demo
 
-[![Deploy](https://github.com/pylover/adia-live/actions/workflows/deploy.yml/badge.svg)](https://github.com/pylover/adia-live/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/pylover/adia-live/actions/workflows/deploy.yml/badge.svg)](https://pylover.github.io/adia)
 
-## Get started
+This is live demo implementation for the 
+[ADia](https://github.com/pylover/adia) project and deployed at 
+https://pylover.github.io/adia.
 
-Install the dependencies...
+## Contribution
+
+### Get started
+
+Install the dependencies.
+
+You need the `python3` and `pip3` to install the 
+[yhttp](https://github.com/yhttp/yhttp) which required by the ``server.py``.
+
 
 ```bash
 make env
 ```
 
-...then start [Rollup](https://rollupjs.org):
+...then start the development server.
 
 ```bash
 make serve
 ```
 
-## Contribution
+## Contribution rules
 
 - Maximum line width: 79 characters.
 - Single qoute for string literals: `'` (`'foo'`)
