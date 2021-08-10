@@ -64,7 +64,7 @@ export default {
       preprocess: preprocess({
         sass: {
           sourceMap: !production,
-          prependData: `@import './styles/variables.sass';`
+          prependData: `@import './styles/global.sass';`
         }
       }),
       // Explicitely ignore warnings

@@ -18,6 +18,7 @@
     <textarea
       on:keydown={textChanged}
       on:paste={textChanged}
+      class="pad1"
       bind:value={text}></textarea>
   </div>
 
@@ -31,7 +32,9 @@
     bind:this={right}
     style="--right-size: {rightSize}"
     class="right">
-    <textarea disabled>{ diagram }</textarea>
+    <textarea 
+      class="pad1"
+      disabled>{ diagram }</textarea>
   </div>
 </div>
 </div>
