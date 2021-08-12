@@ -15,12 +15,7 @@
     bind:clientWidth={leftWidth}
     style="--left-size: {leftSize}"
     class="left">
-    <textarea
-      on:keydown={textChanged}
-      on:paste={textChanged}
-      class="pad1"
-      spellcheck="false"
-      bind:value={text}></textarea>
+    <SourceCode on:change={inputChanged} />
   </div>
 
   <div
@@ -43,25 +38,20 @@
 
 <script>
   import NavItem from './NavItem.svelte'
+  import SourceCode from './SourceCode.svelte'
   import { onMount } from 'svelte'
 
-  let lastSeparatorLocation,
-      left,
-      right,
-      innerWidth,
-      leftWidth,
-      typingTimer,
-      doneTypingInterval = 1000
+  let lastSeparatorLocation
+  let left
+  let right
+  let innerWidth
+  let leftWidth
+  let typingTimer
 
   let leftSize = localStorage.getItem("leftSize") ? 
     `${localStorage.getItem("leftSize")}%` : '30%'
   let rightSize = localStorage.getItem("leftSize") ? 
     `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
-  let text = `
-diagram: foo
-
-sequence:
-foo -> bar: helloworld()!`;
   let diagram = '';
 
   function resizeStart(e) {
@@ -90,35 +80,21 @@ foo -> bar: helloworld()!`;
     window.removeEventListener("mousemove", resize)
   }
 
-  onMount(function() {
-    let localText = localStorage.getItem("editorText")
-    if (localText != null && localText.trim().length > 0) {
-      text = localText;
-    }
-    refresh();
-	})
-  
-  function refresh() {
+  function inputChanged(ev) {
     if (window.adiaDiagram == undefined) {
-      setTimeout(refresh, 200);
+      setTimeout(function() { inputChanged(ev); }, 200);
       return;
     }
-    localStorage.setItem("editorText", text)
+    let text = ev.detail.text;
     if (text.trim().length <= 0) {
       diagram = '';
       return;
     }
     diagram = window.adiaDiagram(text)
   }
-  
-  function textChanged(ev) {
-    clearTimeout(typingTimer)
-    typingTimer = setTimeout(refresh, doneTypingInterval)
-    console.log('Text Changed');
-  }
 </script>
 
-<style type="text/sass">
+<style type="text/sass" scoped>
 
 .main-wrapper
   height: 100% !important
