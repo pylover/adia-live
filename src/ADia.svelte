@@ -19,6 +19,7 @@
       on:keydown={textChanged}
       on:paste={textChanged}
       class="pad1"
+      spellcheck="false"
       bind:value={text}></textarea>
   </div>
 
@@ -34,6 +35,7 @@
     class="right">
     <textarea 
       class="pad1"
+      spellcheck="false"
       disabled>{ diagram }</textarea>
   </div>
 </div>
