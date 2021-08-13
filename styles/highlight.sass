@@ -1,31 +1,34 @@
-$blue-light: #1e90ff
-$blue-dark: #4682b4
-$green-dark: #008b8b 
+$hl-keyword: #1e90ff
+$hl-comment: #008b8b 
+$hl-attr: #4682b4
+$hl-op: #ff69b4
+$hl-text: #d3d3d3
+$hl-module: #e9967a
+$hl-return: #a9a9a9
 
 .highlight
   .comment
-    color: $green-dark
+    color: $hl-comment
   .op
-    color: #ff69b4
+    color: $hl-op
   .keyop,
   .multilinepipe,
   .keyword,
   .diagram,
   .sequence
-    color: $blue-light
+    color: $hl-keyword
   .attr,
   .moduleattrattr
-    color: $blue-dark
+    color: $hl-attr
   .text1,
   .text2,
   .other
-    color: #d3d3d3
+    color: $hl-text
   .caller,
   .callee,
   .moduleattrmodule,
   .notemodulefirst,
   .notemodulesecond
-    color: #e9967a
-    //color: #ff1493
+    color: $hl-module
   .return
-    color: #a9a9a9
+    color: $hl-return
