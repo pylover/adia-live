@@ -8,8 +8,8 @@ import NotFound from './NotFound.svelte';
 
 
 const routes = [
-  { title: 'Adia',  component: ADia,  path: `/`    },
-    { title: 'About', component: About, path: '/about'},
+  {title: 'Adia',  component: ADia,  path: `/`     },
+  {title: 'About', component: About, path: '/about'},
 ];
 
 const notFound = {
@@ -41,7 +41,6 @@ function changeComponent(event) {
 </script>
 
 <style lang="sass" type="text/sass" global>
-
 body
   color: $fg
 

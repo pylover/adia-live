@@ -46,12 +46,11 @@
   let right
   let innerWidth
   let leftWidth
-  let typingTimer
 
   let leftSize = localStorage.getItem("leftSize") ? 
-    `${localStorage.getItem("leftSize")}%` : '30%'
+    `${localStorage.getItem("leftSize")}%` : '20%'
   let rightSize = localStorage.getItem("leftSize") ? 
-    `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '70%'
+    `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '80%'
   let diagram = '';
 
   function resizeStart(e) {
@@ -142,4 +141,5 @@ textarea
   outline: 1px solid $bg-dark
   color: $fg
   resize: none
+  font-size: 14px
 </style>

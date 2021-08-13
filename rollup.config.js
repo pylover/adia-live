@@ -15,6 +15,10 @@ const warnIgnores = {
   'css-unused-selector': {
     capture: /.*"(.*)"$/,
     ignore: [
+      /* Highlight */
+      /^\.highlight/,
+
+      /* Grid */
       /^\.pad\d+/,
       /^\.sm\d+/,
       /^\.md\d+/,
