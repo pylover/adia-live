@@ -16,6 +16,10 @@
   ADia live demo page <i>version: appVersion</i> using javascript and 
     <a href="https://brython.info">Brython</a>.
   </p>
+  <p class="all10">
+    <a href="https://github.com/pylover/adia">ADia</a> 
+    <i>version: { adiaVer }<i>
+  </p>
   <h4 class="all10">
     Documentation
     <hr />
@@ -109,13 +113,24 @@ let loadingError;
 let jsDists = [];
 let docDists = [];
 const baseUrl = basePath;
+let adiaVer = 'loading...';
+
+function getADiaVersion(ev) {
+  if (window.adiaVersion == undefined) {
+    setTimeout(function() { getADiaVersion(ev); }, 200);
+    return;
+  }
+  adiaVer = window.adiaVersion 
+  console.log(adiaVer)
+}
 
 onMount(async () => {
+  getADiaVersion()
   try {
     let [js, doc] = await Promise.all([
-        fetch(`${basePath}/jsdist/index.json?count=10`).then(resp => resp.json()),
-        fetch(`${basePath}/docs/index.json?count=9`).then(resp => resp.json()),
-      ]);
+      fetch(`${basePath}/jsdist/index.json?count=10`).then(resp => resp.json()),
+      fetch(`${basePath}/docs/index.json?count=9`).then(resp => resp.json()),
+    ]);
     jsDists = js;
     docDists = doc;
   }
