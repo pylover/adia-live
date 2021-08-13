@@ -100,7 +100,7 @@
 
 .wrapper
   width: 100%
-  height: calc(100% - #{$navheight})
+  height: calc(100% - #{$navheight + $gutter})
   display: inline-flex
 
 .separator
