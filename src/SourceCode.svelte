@@ -1,12 +1,16 @@
 <div id="sourceParent">
   <pre
-    class="pad1 highlight"
+    class="highlight"
     use:preInit>
   </pre>
+  <div class="numbers" use:numInit>
+    {#each [...Array(lineCount).keys()] as l}
+      <span>{ zeroPad(l, 3) }</span>
+    {/each}
+  </div>
   <textarea
     use:textareaInit
     on:input={textInput}
-    class="pad1"
     spellcheck="false"
     wrap="off"
     on:scroll={updateScrollPosition}
@@ -37,18 +41,21 @@ foo -> bar: Bye() => See U there
 <script>
   import { onMount, createEventDispatcher } from 'svelte'
   import { colorize } from './highlight.js' 
+  import { zeroPad } from './helpers.js'
   const dispatch = createEventDispatcher()
 
-  let x;
   let pre
+  let num
   let textarea
   let typingTimer
+  let lineCount
+  const lineHeight = 20;
   const doneTypingInterval = 1000
   
-  function updateScrollPosition(ev) {
-    const el = ev.srcElement
-    pre.scrollLeft = el.scrollLeft;
-    pre.scrollTop = el.scrollTop;
+  function updateScrollPosition() {
+    pre.scrollLeft = textarea.scrollLeft
+    pre.scrollTop = textarea.scrollTop
+    num.scrollTop = textarea.scrollTop
   }
 
   function textareaInit(element) {
@@ -59,6 +66,10 @@ foo -> bar: Bye() => See U there
     pre = element
   }
 
+  function numInit(element) {
+    num = element
+  }
+
   onMount(function() {
     let localText = localStorage.getItem("editorText")
     if (localText != null && localText.trim().length > 0) {
@@ -66,7 +77,12 @@ foo -> bar: Bye() => See U there
     }
     textInput()
   })
- 
+  
+  function calculateTextareaLines() {
+    var height = textarea.scrollHeight 
+    lineCount =  Math.floor(height/lineHeight) + 3
+  }
+
   function textChanged() {
     let text = textarea.value
     localStorage.setItem("editorText", text)
@@ -76,6 +92,8 @@ foo -> bar: Bye() => See U there
   }
 
   function textInput() {
+    calculateTextareaLines()
+    updateScrollPosition()
     clearTimeout(typingTimer)
     highlight()
     typingTimer = setTimeout(textChanged, doneTypingInterval)
@@ -87,37 +105,56 @@ foo -> bar: Bye() => See U there
 </script>
 
 <style type="text/sass">
+$line-height: 20px
 
 #sourceParent
   width: 100%
   height: 100%
   background: $bg-dark
 
-pre
-  position: absolute
-  top: 0px
-  left: 0px
-  width: 100%
-  height: 100%
-  overflow-x: auto
-
 textarea
-  position: absolute
-  top: 0px
-  left: 0px
-  width: 100%
-  height: 100%
   display: block
-  border: none
   outline: 1px solid $bg-dark
-  cursor: text
   background: transparent
+  cursor: text
   color: transparent
   caret-color: $fg
   resize: none
   
 textarea,
 pre
+  overflow-x: auto
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  border: none
+  padding-left: 36px
+  line-height: $line-height
   font-size: 16px
-  line-height: 20px
+  vertical-align: baseline
+
+.numbers
+  overflow-x: auto
+  position: absolute
+  top: 0px
+  left: 0px
+  height: 100%
+  width: 32px 
+  font-size: 14px
+  background: $bg-light
+  line-height: $line-height
+  vertical-align: baseline
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar
+    display: none;
+  span
+    float: left 
+    clear: both
+    width: 100%
+    text-align: right
+    padding-right: 4px
+    //box-shadow: inset 0 0 1px #0f0; 
 </style>
