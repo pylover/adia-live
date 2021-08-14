@@ -16,13 +16,13 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.2.8",
+    "svelte-preprocess": "^4.7.3",
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "node-sass": "^6.0.1",
-    "postcss": "^8.2.8",
-    "rollup-plugin-serve": "^1.1.0",
-    "sirv-cli": "^1.0.0",
-    "svelte-preprocess": "^4.7.3"
+    "happy-svelte-scrollbar": "^1.1.0"
   }
 }

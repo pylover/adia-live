@@ -18,56 +18,45 @@
   </div>
   <textarea
     use:textareaInit
-    on:input={textInput}
     spellcheck="false"
     wrap="off"
-    on:scroll={updateScrollPosition}
     style="padding-left: { lnWidth + leftPadding }px"
-    ># Live Demo
-
-diagram: Foo
-author: Alice
-version: 0.1
-
-# First section
-sequence: Hello
-foo.title: Foo
-
-@foo: Say Hello
-foo -> bar: helloworld => Hi
-  @foo ~ baz: |
-    lorem ipsum
-  for: each item
-    bar -> baz: Hello()
-
-# Second section
-sequence: Bye
-
-foo -> bar: Bye() => See U there
-  if: baz is there
-    bar -> baz: Bye()</textarea>
+    on:input={textInput}
+    on:scroll={updateScrollPosition}
+    ><slot></slot></textarea>
 </div>
 <script>
   import { onMount, createEventDispatcher } from 'svelte'
   import { colorize } from './highlight.js' 
   import { zeroPad } from './helpers.js'
   const dispatch = createEventDispatcher()
-
+  
+  /* Elements */
   let pre
   let num
   let textarea
-  let typingTimer
-  let lnCount
-  let lnDigits
-  let lnWidth
-  let leftPadding = 4
-  let monospaceMassure
-  const lineHeight = 20
-  const doneTypingInterval = 1000
 
-  function monospaceMassureInit(element) {
-    monospaceMassure = element
+  /* Typing Timer */
+  const doneTypingInterval = 1000
+  let typingTimer
+
+  /* Line Numbering */
+  const lineHeight = 20
+  let leftPadding = 4
+  let charWidth = 11
+  let scrollHeight = lineHeight
+  $: lnCount =  Math.floor(scrollHeight/lineHeight) + 3
+  $: lnDigits = lnCount.toString().length
+  $: lnWidth = lnDigits * charWidth + 12
+
+  function updateScrollHeight() {
+    scrollHeight = textarea.scrollHeight 
   }
+ 
+  function monospaceMassureInit(element) {
+    charWidth = element.clientWidth
+  }
+
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
     pre.scrollTop = textarea.scrollTop
@@ -94,16 +83,8 @@ foo -> bar: Bye() => See U there
     textInput()
   })
   
-  function calculateTextareaLines() {
-    const height = textarea.scrollHeight 
-    const charWidth = monospaceMassure.clientWidth
-    lnCount =  Math.floor(height/lineHeight) + 3
-    lnDigits = lnCount.toString().length
-    lnWidth = lnDigits * charWidth + 12
-  }
-
   function textChanged() {
-    let text = textarea.value
+    const text = textarea.value
     localStorage.setItem("editorText", text)
     dispatch('change', {
       text: text
@@ -111,16 +92,13 @@ foo -> bar: Bye() => See U there
   }
 
   function textInput() {
-    calculateTextareaLines()
-    updateScrollPosition()
     clearTimeout(typingTimer)
-    highlight()
+    updateScrollHeight()
+    updateScrollPosition()
+    colorize(pre, textarea)
     typingTimer = setTimeout(textChanged, doneTypingInterval)
   }
   
-  function highlight() {
-    colorize(pre, textarea);
-  }
 </script>
 
 <style type="text/sass">
