@@ -1,3 +1,23 @@
 @import 'variables'
 @import 'grid'
 @import 'highlight'
+
+/* Scroll Bars */
+::-webkit-scrollbar
+  width: $scrollbar-width
+  height: $scrollbar-width
+
+::-webkit-scrollbar-corner
+  background: $bg-dark
+
+::-webkit-scrollbar-track
+  background: $bg-dark
+  border-radius: $scrollbar-radius
+ 
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: $jingool
+  border-radius: $scrollbar-radius
+
+::-webkit-scrollbar-thumb:hover 
+  background: $mangool
