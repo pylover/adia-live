@@ -9,7 +9,7 @@
     class="pad1"
     spellcheck="false"
     wrap="off"
-    on:scroll={scroll}
+    on:scroll={updateScrollPosition}
     ># Live Demo
 
 diagram: Foo
@@ -35,9 +35,9 @@ foo -> bar: Bye() => See U there
     bar -> baz: Bye()</textarea>
 </div>
 <script>
-	import { onMount, createEventDispatcher } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
   import { colorize } from './highlight.js' 
-	const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher()
 
   let x;
   let pre
@@ -45,8 +45,10 @@ foo -> bar: Bye() => See U there
   let typingTimer
   const doneTypingInterval = 1000
   
-  function scroll(ev) {
-    pre.scrollLeft = ev.srcElement.scrollLeft;
+  function updateScrollPosition(ev) {
+    const el = ev.srcElement
+    pre.scrollLeft = el.scrollLeft;
+    pre.scrollTop = el.scrollTop;
   }
 
   function textareaInit(element) {
@@ -63,21 +65,21 @@ foo -> bar: Bye() => See U there
       textarea.value = localText
     }
     textInput()
-	})
+  })
  
-	function textChanged() {
+  function textChanged() {
     let text = textarea.value
     localStorage.setItem("editorText", text)
-		dispatch('change', {
-			text: text
-		})
+    dispatch('change', {
+      text: text
+    })
   }
 
-	function textInput() {
+  function textInput() {
     clearTimeout(typingTimer)
     highlight()
     typingTimer = setTimeout(textChanged, doneTypingInterval)
-	}
+  }
   
   function highlight() {
     colorize(pre, textarea);
@@ -108,8 +110,8 @@ textarea
   display: block
   border: none
   outline: 1px solid $bg-dark
-  background: transparent
   cursor: text
+  background: transparent
   color: transparent
   caret-color: $fg
   resize: none
@@ -117,4 +119,5 @@ textarea
 textarea,
 pre
   font-size: 16px
+  line-height: 20px
 </style>

@@ -61,11 +61,15 @@ const patterns = [
   },
   {
     name: 'keyop',
-    pattern: /(->|=>|~|@|\.)/,
+    pattern: /->|=>|~|@|\./,
   },
   {
     name: 'op',
     pattern: /[:!\$%\^&*\(\)+=_\]\[\}\{;"'?/\\<>,~-]/,
+  },
+  {
+    name: 'newline',
+    pattern: /\n/
   },
   {
     name: 'whitespace',
@@ -78,13 +82,12 @@ const patterns = [
 ]
 
 function tokenize(input) {
-  let items = [];
-  let matchText;
+  let items = []
+  let matchText
   for(let i = 0; i < patterns.length; i++){
     let pattern = patterns[i];
     items.push(`(?<${pattern.name}>${pattern.pattern.source})`)
   }
-  
   const whole = new RegExp(items.join('|'), 'gmi')
   const tokens = []
   for (const match of input.matchAll(whole)) {
@@ -98,6 +101,14 @@ function tokenize(input) {
         text: matchText
       })
     }
+  }
+  
+  const last = tokens[tokens.length - 1]
+  if (last.name == 'newline') {
+    tokens.push({
+      name: 'whitespace',
+      text: ' '
+    })
   }
   return tokens
 }
