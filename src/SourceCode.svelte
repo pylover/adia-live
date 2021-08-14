@@ -1,11 +1,19 @@
+<span 
+  class="monospace-massure"
+  use:monospaceMassureInit
+  >X</span>
 <div id="sourceParent">
   <pre
     class="highlight"
+    style="padding-left: { lnWidth + leftPadding }px"
     use:preInit>
   </pre>
-  <div class="numbers" use:numInit>
-    {#each [...Array(lineCount).keys()] as l}
-      <span>{ zeroPad(l, 3) }</span>
+  <div 
+    class="numbers" 
+    style="width: { lnWidth }px"
+    use:numInit>
+    {#each [...Array(lnCount).keys()] as l}
+      <span>{ zeroPad(l, lnDigits) }</span>
     {/each}
   </div>
   <textarea
@@ -14,6 +22,7 @@
     spellcheck="false"
     wrap="off"
     on:scroll={updateScrollPosition}
+    style="padding-left: { lnWidth + leftPadding }px"
     ># Live Demo
 
 diagram: Foo
@@ -48,10 +57,17 @@ foo -> bar: Bye() => See U there
   let num
   let textarea
   let typingTimer
-  let lineCount
-  const lineHeight = 20;
+  let lnCount
+  let lnDigits
+  let lnWidth
+  let leftPadding = 4
+  let monospaceMassure
+  const lineHeight = 20
   const doneTypingInterval = 1000
-  
+
+  function monospaceMassureInit(element) {
+    monospaceMassure = element
+  }
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
     pre.scrollTop = textarea.scrollTop
@@ -79,8 +95,11 @@ foo -> bar: Bye() => See U there
   })
   
   function calculateTextareaLines() {
-    var height = textarea.scrollHeight 
-    lineCount =  Math.floor(height/lineHeight) + 3
+    const height = textarea.scrollHeight 
+    const charWidth = monospaceMassure.clientWidth
+    lnCount =  Math.floor(height/lineHeight) + 3
+    lnDigits = lnCount.toString().length
+    lnWidth = lnDigits * charWidth + 12
   }
 
   function textChanged() {
@@ -106,6 +125,7 @@ foo -> bar: Bye() => See U there
 
 <style type="text/sass">
 $line-height: 20px
+$font-size: 15px
 
 #sourceParent
   width: 100%
@@ -129,10 +149,10 @@ pre
   left: 0px
   width: 100%
   height: 100%
+  z-index: 8
   border: none
-  padding-left: 36px
   line-height: $line-height
-  font-size: 16px
+  font-size: $font-size
   vertical-align: baseline
 
 .numbers
@@ -141,11 +161,11 @@ pre
   top: 0px
   left: 0px
   height: 100%
-  width: 32px 
-  font-size: 14px
+  z-index: 10
+  font-size: $font-size - 2
   background: $bg-light
+  color: $mangool
   line-height: $line-height
-  vertical-align: baseline
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar
@@ -156,5 +176,14 @@ pre
     width: 100%
     text-align: right
     padding-right: 4px
-    //box-shadow: inset 0 0 1px #0f0; 
+    box-shadow: inset 0 0 2px black
+    vertical-align: baseline
+
+.monospace-massure
+  position: absolute
+  top: -100px
+  left: -100px
+  line-height: $line-height
+  font-size: $font-size
+  font-family: monospace
 </style>
