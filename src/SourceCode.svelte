@@ -1,34 +1,59 @@
 <span 
   class="monospace-massure"
+  bind:this={num}
   use:monospaceMassureInit
   >X</span>
 <div id="sourceParent">
   <pre
     class="highlight"
     style="padding-left: { lnWidth + leftPadding }px"
-    use:preInit>
+    bind:this={pre}
+  >
   </pre>
   <div 
     class="numbers" 
     style="width: { lnWidth }px"
-    use:numInit>
-    {#each [...Array(lnCount).keys()] as l}
-      <span>{ zeroPad(l, lnDigits) }</span>
+    bind:this={num}
+  >
+    {#each [...Array(lineCount).keys()] as l}
+      <span>{ leftPad(l + 1, lnDigits, ' ') }</span>
     {/each}
   </div>
   <textarea
-    use:textareaInit
     spellcheck="false"
     wrap="off"
     style="padding-left: { lnWidth + leftPadding }px"
+    bind:this={textarea}
     on:input={textInput}
     on:scroll={updateScrollPosition}
-    ><slot></slot></textarea>
+    ># Live Demo
+
+diagram: Foo
+author: Alice
+version: 0.1
+
+# First section
+sequence: Hello
+foo.title: Foo
+
+@foo: Say Hello
+foo -> bar: helloworld => Hi
+  @foo ~ baz: |
+    lorem ipsum
+  for: each item
+    bar -> baz: Hello()
+
+# Second section
+sequence: Bye
+
+foo -> bar: Bye() => See U there
+  if: baz is there
+    bar -> baz: Bye()</textarea>
 </div>
 <script>
-  import { onMount, createEventDispatcher } from 'svelte'
-  import { colorize } from './highlight.js' 
-  import { zeroPad } from './helpers.js'
+  import { onMount, createEventDispatcher, tick } from 'svelte'
+  import { tokenize, colorize } from './highlight.js' 
+  import { leftPad } from './helpers.js'
   const dispatch = createEventDispatcher()
   
   /* Elements */
@@ -44,12 +69,10 @@
   const lineHeight = 20
   let leftPadding = 4
   let charWidth = 11
-  let scrollHeight = lineHeight
-  $: lnCount =  Math.floor(scrollHeight/lineHeight) + 3
-  $: lnDigits = lnCount.toString().length
+  let lineCount = 1
+  $: lnDigits = lineCount.toString().length
   $: lnWidth = lnDigits * charWidth + 12
 
- 
   function monospaceMassureInit(element) {
     charWidth = element.clientWidth
   }
@@ -60,24 +83,12 @@
     num.scrollTop = textarea.scrollTop
   }
 
-  function textareaInit(element) {
-    textarea = element
-  }
-
-  function preInit(element) {
-    pre = element
-  }
-
-  function numInit(element) {
-    num = element
-  }
-
-  onMount(function() {
+  onMount(async function() {
     let localText = localStorage.getItem("editorText")
     if (localText != null && localText.trim().length > 0) {
       textarea.value = localText
     }
-    textInput()
+    await textInput()
   })
   
   function textChanged() {
@@ -88,13 +99,17 @@
     })
   }
 
-  function textInput() {
+  async function textInput() {
     clearTimeout(typingTimer)
+    
+    /* Tokenize */
+    const {tokens, lines} = tokenize(textarea.value)
+    lineCount = lines
 
-    /* Update scroll height */
-    scrollHeight = textarea.scrollHeight 
     updateScrollPosition()
-    colorize(pre, textarea)
+    await tick()
+    colorize(pre, textarea, tokens)
+    await tick()
     typingTimer = setTimeout(textChanged, doneTypingInterval)
   }
   

@@ -15,29 +15,7 @@
     bind:clientWidth={leftWidth}
     style="--left-size: {leftSize}"
     class="left">
-    <SourceCode on:change={inputChanged} ># Live Demo
-
-diagram: Foo
-author: Alice
-version: 0.1
-
-# First section
-sequence: Hello
-foo.title: Foo
-
-@foo: Say Hello
-foo -> bar: helloworld => Hi
-  @foo ~ baz: |
-    lorem ipsum
-  for: each item
-    bar -> baz: Hello()
-
-# Second section
-sequence: Bye
-
-foo -> bar: Bye() => See U there
-  if: baz is there
-    bar -> baz: Bye()</SourceCode>
+    <SourceCode on:change={inputChanged} />
   </div>
 
   <div
