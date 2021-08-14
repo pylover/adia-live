@@ -49,9 +49,6 @@
   $: lnDigits = lnCount.toString().length
   $: lnWidth = lnDigits * charWidth + 12
 
-  function updateScrollHeight() {
-    scrollHeight = textarea.scrollHeight 
-  }
  
   function monospaceMassureInit(element) {
     charWidth = element.clientWidth
@@ -93,7 +90,9 @@
 
   function textInput() {
     clearTimeout(typingTimer)
-    updateScrollHeight()
+
+    /* Update scroll height */
+    scrollHeight = textarea.scrollHeight 
     updateScrollPosition()
     colorize(pre, textarea)
     typingTimer = setTimeout(textChanged, doneTypingInterval)
