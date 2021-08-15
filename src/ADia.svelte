@@ -29,8 +29,9 @@
     style="--right-size: {rightSize}"
     class="right">
     <textarea 
-      class="pad1"
       spellcheck="false"
+      wrap="off"
+      class="pad1"
       disabled>{ diagram }</textarea>
   </div>
 </div>
