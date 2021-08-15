@@ -132,7 +132,11 @@ textarea
   color: transparent
   caret-color: $fg
   resize: none
-  
+
+pre
+  &::-webkit-scrollbar
+    display: none
+ 
 textarea,
 pre
   overflow-x: auto
