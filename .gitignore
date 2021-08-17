@@ -1,5 +1,10 @@
 /node_modules/
-/public/build/
+/public/build
+/public/adia.js
+/public/adia.stdlib.js
+/public/adia.bundle.js
+/public/adia_worker.py
+/public/adia/*
 
 .DS_Store
 
