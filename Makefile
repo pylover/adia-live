@@ -1,38 +1,36 @@
 PIP = $(shell which pip3)
 BRYTHON_REPO = https://raw.githubusercontent.com/brython-dev/brython
 BRYTHON_URL = $(BRYTHON_REPO)/master/www/src
+ADIA_VER = 2.0
 ADIA_URL = https://pylover.github.io/adia/jsdist
 
 all: build
 
 .PHONY: build
-build: adia
+build:
 	npm run build
 
 .PHONY: env
-env:
+env: adia public/brython.js
 	$(PIP) install 'yhttp >= 2.13.2'
 	npm install
 
 .PHONY: serve
-serve: adia
+serve: 
 	npm run dev
 
 public/brython.js:
 	curl "$(BRYTHON_URL)/brython.js" > $@
 
-public/adia.lib.js:
-	curl "$(ADIA_URL)/adia.lib.js" > $@
-
-public/adia.js:
-	curl "$(ADIA_URL)/adia.js" > $@
-
 .PHONY: adia
-adia: public/brython.js public/adia.lib.js public/adia.js
-
+adia:
+	- mkdir -p  $(ADIA_DIR)
+	curl "$(ADIA_URL)/adia-$(ADIA_VER).tar.gz" | tar -zxvC public
+	
 clean::
-	-rm public/brython.js
-	-rm public/adia.lib.js
-	-rm public/adia.js
+	- rm public/brython.js
+	- rm public/adia*.js
+	- rm public/adia*.py
+	- rm -rf public/adia
 
 
