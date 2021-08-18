@@ -44,7 +44,7 @@
   <ul class="all10">
   {#each jsDists as v, i}
     <li>
-      <a href="{baseUrl}/jsdist/{v}/adia-{v}.tar.gz">
+      <a href="{baseUrl}/jsdist/adia-{v}.tar.gz">
         adia-{v}.tar.gz
         {#if i == 0}
           <i> (latest) </i>
