@@ -8,9 +8,13 @@
            target="/about" />
   <span> { status }</span>
 </nav>
-
 <div
   class="wrapper">
+  {#if initializing}
+    <div class="loading all10">
+      <p>Initializing, please wait ... </p>
+    </div>
+  {/if}
   <div
     bind:this={left}
     bind:clientWidth={leftWidth}
@@ -64,6 +68,7 @@
     `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '80%'
   
   /* ADia Worker */
+  let initializing = true
   let diagram = ''
   let status = ''
   let source
@@ -127,8 +132,11 @@ foo -> bar: Bye() => See U there
     clean:   ()  => diagram = '',
     success: dia => diagram = dia,
     error:   msg => diagram = msg,
-    status: state => loading = state == 'working'
-  });
+    status: state => {
+      initializing = state == 'initializing'
+      loading = initializing || state == 'processing'
+    }
+  })
 
   $: if (source != undefined) {
     aDia.go()
@@ -195,4 +203,17 @@ textarea
   color: $fg
   resize: none
   font-size: 14px
+
+.loading
+  position: absolute
+  top: $navheight
+  left: 0px
+  width: 100%
+  height: 100%
+  z-index: 80
+  background: #000000
+  text-align: center
+  padding-top: $navheight * 3
+  font-size: 2em
 </style>
+

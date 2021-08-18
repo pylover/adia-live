@@ -45,6 +45,7 @@ function changeComponent(event) {
 <style lang="sass" type="text/sass" global>
 body
   color: $fg
+  font-family: monospace
 
 a
   color: $fg
