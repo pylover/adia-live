@@ -209,7 +209,7 @@ textarea
   top: $navheight
   left: 0px
   width: 100%
-  height: 100%
+  height: calc(100% - #{$navheight + $gutter})
   z-index: 80
   background: #000000
   text-align: center
