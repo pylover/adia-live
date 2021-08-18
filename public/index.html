@@ -7,11 +7,19 @@
   <link href="favicon.png" rel="icon" type="image/png">
 	<link rel="stylesheet" href="reset.css" >
 	<link rel="stylesheet" href="build/bundle.css" >
-  <!-- Brython -->
+  <!-- Brython
+  <script src="brython.js"></script> 
+	<script src="https://cdn1.dobisel.com/adia/2.0/adia.stdlib.js"></script>
   <script src="https://cdn1.dobisel.com/adia/brython.js"></script> 
+  <script src="https://cdn1.dobisel.com/adia/brython_stdlib.js"></script> 
+  -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.5/brython.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.9.5/brython_stdlib.min.js">
+  </script>
 
   <!-- ADia -->
-	<script src="https://cdn1.dobisel.com/adia/2.0/adia.stdlib.js"></script>
 	<script src="https://cdn1.dobisel.com/adia/2.0/adia.js"></script>
 
   <!-- Worker -->
@@ -31,7 +39,6 @@
   <!-- Brython Setup -->
   <script type="text/python">
   # Coding style: PEP8
-
   from browser import window, bind, worker
 
 

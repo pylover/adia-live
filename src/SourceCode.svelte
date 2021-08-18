@@ -23,47 +23,24 @@
     spellcheck="false"
     wrap="off"
     style="padding-left: { lnWidth + leftPadding }px"
+    bind:value={value}
     bind:this={textarea}
-    on:input={textInput}
     on:scroll={updateScrollPosition}
-    ># Live Demo
-
-diagram: Foo
-author: Alice
-version: 0.1
-
-# First section
-sequence: Hello
-foo.title: Foo
-
-@foo: Say Hello
-foo -> bar: helloworld => Hi
-  @foo ~ baz: |
-    lorem ipsum
-  for: each item
-    bar -> baz: Hello()
-
-# Second section
-sequence: Bye
-
-foo -> bar: Bye() => See U there
-  if: baz is there
-    bar -> baz: Bye()</textarea>
+    ></textarea>
+<!-- 
+-->
 </div>
 <script>
-  import { onMount, createEventDispatcher, tick } from 'svelte'
+  import { onMount } from 'svelte'
   import { tokenize, colorize } from './highlight.js' 
   import { leftPad } from './helpers.js'
-  const dispatch = createEventDispatcher()
   
+  export let value = ''
+
   /* Elements */
   let pre
   let num
   let textarea
-
-  /* Typing Timer */
-  const doneTypingInterval = 1000
-  let typingTimer
 
   /* Line Numbering */
   const lineHeight = 20
@@ -83,36 +60,13 @@ foo -> bar: Bye() => See U there
     num.scrollTop = textarea.scrollTop
   }
 
-  onMount(async function() {
-    let localText = localStorage.getItem("editorText")
-    if (localText != null && localText.trim().length > 0) {
-      textarea.value = localText
-    }
-    await textInput()
-  })
-  
-  function textChanged() {
-    const text = textarea.value
-    localStorage.setItem("editorText", text)
-    dispatch('change', {
-      text: text
-    })
-  }
-
-  async function textInput() {
-    clearTimeout(typingTimer)
-    
+  $: if (textarea) {
     /* Tokenize */
-    const {tokens, lines} = tokenize(textarea.value)
-    lineCount = lines
-
+    const {tokens, lines} = tokenize(value)
     updateScrollPosition()
-    await tick()
+    lineCount = lines
     colorize(pre, textarea, tokens)
-    await tick()
-    typingTimer = setTimeout(textChanged, doneTypingInterval)
   }
-  
 </script>
 
 <style type="text/sass">

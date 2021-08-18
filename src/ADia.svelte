@@ -6,6 +6,7 @@
   <NavItem icon="question" 
            style="float: right"
            target="/about" />
+  <span> { status }</span>
 </nav>
 
 <div
@@ -15,7 +16,10 @@
     bind:clientWidth={leftWidth}
     style="--left-size: {leftSize}"
     class="left">
-    <SourceCode on:change={inputChanged} />
+    <SourceCode 
+      bind:this={sourceArea} 
+      bind:value={source} 
+    />
   </div>
 
   <div
@@ -42,9 +46,15 @@
   import SourceCode from './SourceCode.svelte'
   import { onMount } from 'svelte'
 
-  let lastSeparatorLocation
+  /* Properties */
+  export let loading
+
+  /* Elements */
+  let sourceArea
   let left
   let right
+
+  let lastSeparatorLocation
   let innerWidth
   let leftWidth
 
@@ -52,7 +62,34 @@
     `${localStorage.getItem("leftSize")}%` : '20%'
   let rightSize = localStorage.getItem("leftSize") ? 
     `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '80%'
-  let diagram = '';
+  
+  /* ADia Worker */
+  let diagram = ''
+  let status = ''
+  let source
+  let defaultSource = `# Live Demo
+
+diagram: Foo
+author: Alice
+version: 0.1
+
+# First section
+sequence: Hello
+foo.title: Foo
+
+@foo: Say Hello
+foo -> bar: helloworld => Hi
+  @foo ~ baz: |
+    lorem ipsum
+  for: each item
+    bar -> baz: Hello()
+
+# Second section
+sequence: Bye
+
+foo -> bar: Bye() => See U there
+  if: baz is there
+    bar -> baz: Bye()`
 
   function resizeStart(e) {
     lastSeparatorLocation = {
@@ -80,18 +117,33 @@
     window.removeEventListener("mousemove", resize)
   }
 
-  function inputChanged(ev) {
-    if (window.adiaDiagram == undefined) {
-      setTimeout(function() { inputChanged(ev); }, 200);
-      return;
-    }
-    let text = ev.detail.text;
-    if (text.trim().length <= 0) {
-      diagram = '';
-      return;
-    }
-    diagram = window.adiaDiagram(text)
+  /* Create ADia instance */
+  const aDia = new ADia({
+    delay:   800,  // ms
+    input:   ()  => {
+      localStorage.setItem("editorText", source)
+      return source
+    },
+    clean:   ()  => diagram = '',
+    success: dia => diagram = dia,
+    error:   msg => diagram = msg,
+    status: state => loading = state == 'working'
+  });
+
+  $: if (source != undefined) {
+    aDia.go()
   }
+
+  onMount(async function() {
+    let localText = localStorage.getItem("editorText")
+    if (localText != null && localText.trim().length > 0) {
+      source = localText
+    }
+    else {
+      source = defaultSource
+    }
+    aDia.go()
+  })
 </script>
 
 <style type="text/sass" scoped>

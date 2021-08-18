@@ -21,6 +21,8 @@ let selectedIndex = routes.findIndex(
   e => (basePath + e.path) == window.location.pathname
 )
 let selected = routes[selectedIndex];
+let loading = true;
+
 if (selectedIndex < 0) {
   selected = notFound;
 }
@@ -74,8 +76,11 @@ nav
 
 <Icons />
 <!-- Content -->
-<svelte:component this={selected.component}>
-  <Logo target="/" />
+<svelte:component  
+  this={selected.component}
+  bind:loading={loading}
+  >
+  <Logo bind:loading={loading} target="/" />
   <NavItem icon="github" 
            style="float: right"
            target="https://github.com/pylover/adia" />

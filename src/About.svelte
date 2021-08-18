@@ -41,13 +41,11 @@
     Javascript releases
     <hr />
   </h4>
-  <div class="sm10 md3 lg3 xg3">
-  <h5>Bundle</h5>
   <ul class="all10">
   {#each jsDists as v, i}
     <li>
-      <a href="{baseUrl}/jsdist/{v}/adia.bundle-{v}.js">
-        adia.bundle-{v}.js
+      <a href="{baseUrl}/jsdist/{v}/adia-{v}.tar.gz">
+        adia-{v}.tar.gz
         {#if i == 0}
           <i> (latest) </i>
         {/if}
@@ -55,25 +53,7 @@
     </li>
   {/each}
   </ul>
-  </div>
-  <div class="sm10 md7 lg7 xg7">
-  <h5>Brython Module</h5>
-  <ul class="all10">
-  {#each jsDists as v, i}
-    <li>
-      <a href="{baseUrl}/jsdist/{v}/adia-{v}.js">
-        adia-{v}.js
-      </a>
-      <a href="{baseUrl}/jsdist/{v}/adia-{v}.js">
-        adia.lib-{v}.js
-      </a>
-      {#if i == 0}
-        <i> (latest) </i>
-      {/if}
-    </li>
-  {/each}
-  </ul>
-  </div>
+
   <h4 class="all10">
     Source Codes
     <hr />
@@ -109,6 +89,7 @@ const repos = [
   'https://github.com/pylover/adia',
   'https://github.com/pylover/adia-live',
 ];
+export let loading = true
 let loadingError;
 let jsDists = [];
 let docDists = [];
@@ -136,6 +117,9 @@ onMount(async () => {
   }
   catch (err) {
     loadingError = `Index loading error: ${err}`
+  }
+  finally {
+    loading = false
   }
 });
 
