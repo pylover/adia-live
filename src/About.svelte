@@ -27,7 +27,7 @@
   <ul class="all10">
   {#each docDists as v, i}
     <li>
-      <a href="basePath/docs/{v}/html/">
+      <a href="basePath/docs/{i == 0? 'latest': v}/html/">
         v{v}
         {#if i == 0}
           <i> (latest) </i>
@@ -89,23 +89,24 @@ const repos = [
   'https://github.com/pylover/adia',
   'https://github.com/pylover/adia-live',
 ];
-export let loading = true
+export let busy = true
 let loadingError;
 let jsDists = [];
 let docDists = [];
 let adiaVer = 'loading...';
 
-function getADiaVersion(ev) {
-  if (window.adiaVersion == undefined) {
-    setTimeout(function() { getADiaVersion(ev); }, 200);
-    return;
-  }
-  adiaVer = window.adiaVersion 
-  console.log(adiaVer)
+
+function updateADiaVersion() {
+  adiaVer = window.aDia.__version__
+}
+
+aDia.addHook('init', updateADiaVersion);
+
+$: if (!busy) {
+  updateADiaVersion()
 }
 
 onMount(async () => {
-  getADiaVersion()
   try {
     let [js, doc] = await Promise.all([
       fetch('basePath/jsdist/index.json?count=10').then(resp => resp.json()),
@@ -118,7 +119,7 @@ onMount(async () => {
     loadingError = `Index loading error: ${err}`
   }
   finally {
-    loading = false
+    busy = false
   }
 });
 

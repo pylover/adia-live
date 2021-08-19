@@ -18,9 +18,14 @@ const notFound = {
   component: NotFound,
 }
 
+let spin = true
+let busy = true;
+let processing = true;
 let loading = true;
 let route
 export let title
+
+$: spin = busy || processing;
 
 function navigate(target) {
   route = routes[target];
@@ -43,6 +48,14 @@ setContext('nav', {navigate})
 /* Match current route */
 let currentPath = window.location.pathname.replace(/^basePath/, '')
 navigate(currentPath)
+
+/* ADia configuration */
+aDia.delay = 300
+aDia.addHook('init', () => loading = false);
+aDia.addHook('status', (aDia, state) => {
+  processing = state == 'processing'
+});
+
 </script>
 
 <style lang="sass" type="text/sass" global>
@@ -65,16 +78,37 @@ nav
   border-bottom: 1px solid black
   padding-right: $gutter
 
+.loading
+  position: absolute
+  top: $navheight
+  left: 0px
+  width: 100%
+  height: calc(100% - #{$navheight + $gutter})
+  z-index: 80
+  background: #000000
+  text-align: center
+  padding-top: $navheight * 3
+  font-size: 2em
+
 </style>
 
 <Icons />
+
+<!-- Initialization Overlay -->
+{#if loading}
+  <div class="loading all10">
+    <p>Loading, please wait ... </p>
+  </div>
+{/if}
+
 <!-- Content -->
-<svelte:component  
+  <svelte:component  
   this={route.component}
-  bind:loading={loading}
+  bind:busy
   >
-  <Logo bind:loading={loading} />
+  <Logo bind:spin />
   <NavItem icon="github" 
            style="float: right"
            target="https://github.com/pylover/adia" />
 </svelte:component>
+

@@ -12,11 +12,6 @@
 </nav>
 <div
   class="wrapper">
-  {#if initializing}
-    <div class="loading all10">
-      <p>Initializing, please wait ... </p>
-    </div>
-  {/if}
   <div
     bind:this={left}
     bind:clientWidth={leftWidth}
@@ -53,7 +48,7 @@
   import { onMount } from 'svelte'
 
   /* Properties */
-  export let loading
+  export let busy = true
 
   /* Elements */
   let sourceArea
@@ -124,21 +119,15 @@ foo -> bar: Bye() => See U there
     window.removeEventListener("mousemove", resize)
   }
 
-  /* Create ADia instance */
-  const aDia = new ADia({
-    delay:   800,  // ms
-    input:   ()  => {
-      localStorage.setItem("editorText", source)
-      return source
-    },
-    clean:   ()  => diagram = '',
-    success: dia => diagram = dia,
-    error:   msg => diagram = msg,
-    status: state => {
-      initializing = state == 'initializing'
-      loading = initializing || state == 'processing'
-    }
-  })
+  ///* Create ADia instance */
+  //const aDia = new ADia({
+  //  delay:   800,  // ms
+  //  init: (aDia) => {},
+  //  input:   ()  => {
+  //    localStorage.setItem("editorText", source)
+  //    return source
+  //  },
+  //})
 
   $: if (source != undefined) {
     aDia.go()
@@ -152,7 +141,15 @@ foo -> bar: Bye() => See U there
     else {
       source = defaultSource
     }
-    aDia.go()
+
+    aDia.input = () => source
+    aDia.addHook('result', () => {
+      diagram = ''
+    });
+    aDia.addHook('error', (aDia, err) => diagram = err);
+    aDia.addHook('success', (aDia, dia) => diagram = dia);
+    busy = false
+    //aDia.go()
   })
 </script>
 
@@ -206,16 +203,5 @@ textarea
   resize: none
   font-size: 14px
 
-.loading
-  position: absolute
-  top: $navheight
-  left: 0px
-  width: 100%
-  height: calc(100% - #{$navheight + $gutter})
-  z-index: 80
-  background: #000000
-  text-align: center
-  padding-top: $navheight * 3
-  font-size: 2em
 </style>
 

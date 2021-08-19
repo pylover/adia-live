@@ -4,12 +4,12 @@ import { getContext } from 'svelte';
 const { navigate } = getContext('nav')
 
 // TODO: use evelte store
-export let loading
+export let spin = true
 
 </script>
 <button on:click={() => navigate('/')}>
   <svg 
-   class="{ loading? 'start': 'stop'}"
+   class="{ spin? 'start': 'stop'}"
    >
     <use xlink:href="#icon-pacman"></use>
   </svg>
@@ -24,9 +24,10 @@ button
   overflow: hidden
   > *
     float: left
+    line-height: $navheight 
   svg
     width: $navheight
-    margin-top: $navheight * .15
+    margin-top: $navheight * .10
     height: $navheight * .7
 
     animation-name: go
