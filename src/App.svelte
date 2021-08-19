@@ -37,7 +37,7 @@ function navigate(target) {
 
   window.history.pushState({}, 
     route.title, 
-    `${window.location.origin}${target}`
+    `${window.location.origin}basePath${target}`
   );
 
   /* Set the page title */
