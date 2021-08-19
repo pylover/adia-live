@@ -46,8 +46,8 @@ function navigate(target) {
 setContext('nav', {navigate})
 
 /* Match current route */
-let currentPath = window.location.pathname.replace(/^basePath/, '')
-navigate(currentPath)
+let current = window.location.pathname.replace(new RegExp('^basePath'), '')
+navigate(current)
 
 /* ADia configuration */
 aDia.delay = 300
