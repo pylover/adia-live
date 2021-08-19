@@ -70,8 +70,6 @@
 </script>
 
 <style type="text/sass">
-$line-height: 20px
-$font-size: 15px
 
 #sourceParent
   width: 100%
@@ -101,8 +99,8 @@ pre
   height: 100%
   z-index: 8
   border: none
-  line-height: $line-height
-  font-size: $font-size
+  line-height: $lineheight
+  font-size: $fontsize
   vertical-align: baseline
 
 .numbers
@@ -112,10 +110,10 @@ pre
   left: 0px
   height: 100%
   z-index: 10
-  font-size: $font-size - 2
+  font-size: $fontsize - 2
   background: $bg-light
   color: $mangool
-  line-height: $line-height
+  line-height: $lineheight
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar
@@ -133,7 +131,7 @@ pre
   position: absolute
   top: -100px
   left: -100px
-  line-height: $line-height
-  font-size: $font-size
+  line-height: $lineheight
+  font-size: $fontsize
   font-family: monospace
 </style>

@@ -25,7 +25,17 @@ const warnIgnores = {
       /^\.lg\d+/,
       /^\.xg\d+/,
       /^\.all\d+/,
-      /^\.row(::after)?/
+      /^\.row(::after)?/,
+      
+      /* Elements */
+      /^span/,
+      /^textarea/,
+      /^(a|p|button)[:]/,
+      /^(body|html|a|p|pre|nav|div|iframe|button|label||code|ul|li|ol)$/,
+      /^(table|thead|tfoot|tbody|td|th|tr)$/,
+      /^(form|fieldset)$/,
+      /^h[1-6]/,
+      /^(a|button) svg$/,
     ]
   }
 }

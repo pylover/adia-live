@@ -1,0 +1,80 @@
+/* Scroll Bars */
+::-webkit-scrollbar
+  width: $scrollbar-width
+  height: $scrollbar-width
+  cursor: pointer
+
+::-webkit-scrollbar-corner
+  background: $bg-dark
+
+::-webkit-scrollbar-track
+  background: $bg-verydark
+  border-radius: $scrollbar-radius
+ 
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: $jingool
+  border-radius: $scrollbar-radius
+
+::-webkit-scrollbar-thumb:hover 
+  background: $mangool
+  cursor: pointer
+
+a, button
+  border: none
+  background: none
+  color: $fg
+  text-decoration: none
+  color: $fg
+  cursor: pointer
+  &:hover
+    color: $mangool
+    svg
+      fill: $mangool
+
+  svg
+    fill: $fg
+
+html, body 
+  height: 100%
+
+
+html 
+  box-sizing: border-box
+
+*,
+*:before,
+*:after 
+  box-sizing: inherit
+
+
+html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6, p,
+a, ol, ul, li,
+fieldset, form, label,
+table, tbody, tfoot, thead, tr, th, td,
+nav
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: 100%
+  font: inherit
+  vertical-align: baseline
+  line-height: $lineheight
+
+ol, ul 
+  list-style: none
+
+table 
+  border-collapse: collapse
+  border-spacing: 0
+
+textarea, pre, code
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: 100%
+  font-family: monospace
+  vertical-align: baseline
+
+
