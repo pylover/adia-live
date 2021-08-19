@@ -1,21 +1,21 @@
 <script>
-import { createEventDispatcher } from 'svelte';
+import { getContext } from 'svelte';
 export let title = '';
 export let target;
 export let icon;
 export let cssClass = '';
 export let id = '';
 export let style = '';
-const dispatch = createEventDispatcher();
+let internal = false;
+
+const { navigate } = getContext('nav')
 
 function click() {
-	dispatch('click', {
-		text: 'Hello!'
-	});
+  navigate(target)
 }
 
 if (target != undefined && target.startsWith('/')) {
-  target = basePath + target
+  internal = true;
 }
 </script>
 <style lang="sass" type="text/sass">
@@ -39,7 +39,13 @@ a
   margin-left: $gutter
 
 </style> 
-<a class={cssClass} {id} {style} href={target} on:click={click}>
+<a 
+  {id} 
+  class={cssClass} 
+  {style} 
+  href={!internal? target: undefined} 
+  on:click={internal? click: undefined}
+  >
   {#if icon}
     <svg><use xlink:href={"#icon-" + icon}></use></svg>
   {/if}

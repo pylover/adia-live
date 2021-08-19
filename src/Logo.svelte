@@ -1,24 +1,23 @@
 <script>
-import { flip } from 'svelte/animate';
+import { getContext } from 'svelte';
 
-export let target
+const { navigate } = getContext('nav')
+
+// TODO: use evelte store
 export let loading
 
-if (target != undefined && target.startsWith('/')) {
-  target = basePath + target
-}
 </script>
-<a href={target}>
+<button on:click={() => navigate('/')}>
   <svg 
    class="{ loading? 'start': 'stop'}"
    >
     <use xlink:href="#icon-pacman"></use>
   </svg>
   <h1>ADia Live Demo</h1>
-</a>
+</button>
 <style lang="sass" type="text/sass" scoped>
 
-a
+button
   height: $navheight
   line-height: $navheight 
   vertical-align: middle

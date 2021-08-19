@@ -1,4 +1,5 @@
 <script>
+import { setContext } from 'svelte';
 import Icons from './Icons.svelte';
 import NavItem from './NavItem.svelte'
 import Logo from './Logo.svelte'
@@ -7,56 +8,47 @@ import About from './About.svelte';
 import NotFound from './NotFound.svelte';
 
 
-const routes = [
-  {title: 'Adia',  component: ADia,  path: `/`     },
-  {title: 'About', component: About, path: '/about'},
-];
+const routes = {
+  '/':      {title: 'Live Demo',  component: ADia  },
+  '/about': {title: 'About',      component: About },
+};
 
 const notFound = {
   title: 'Not Found',
   component: NotFound,
 }
 
-let selectedIndex = routes.findIndex(
-  e => (basePath + e.path) == window.location.pathname
-)
-let selected = routes[selectedIndex];
 let loading = true;
+let route
+export let title
 
-if (selectedIndex < 0) {
-  selected = notFound;
-}
-else {
-  selected = routes[selectedIndex];
-}
+function navigate(target) {
+  route = routes[target];
 
-function changeComponent(event) {
-  let i = event.srcElement.id;
-  selected = routes[i];
-  selectedIndex = i;
+  /* 404 */
+  if (route == undefined) {
+    route = notFound;
+  }
+
   window.history.pushState({}, 
-    selected.title, 
-    `${window.location.origin}${selected.path}`
+    route.title, 
+    `${window.location.origin}${target}`
   );
-}
 
+  /* Set the page title */
+  document.title = `${title} -> ${route.title}`
+}
+setContext('nav', {navigate})
+
+/* Match current route */
+let currentPath = window.location.pathname.replace(/^basePath/, '')
+navigate(currentPath)
 </script>
 
 <style lang="sass" type="text/sass" global>
 body
   color: $fg
   font-family: monospace
-
-a
-  color: $fg
-  cursor: pointer
-  &:hover
-    color: $mangool
-    svg
-      fill: $mangool
-
-  svg
-    fill: $fg
 
 .main-wrapper
   background-color: $bg-light
@@ -78,10 +70,10 @@ nav
 <Icons />
 <!-- Content -->
 <svelte:component  
-  this={selected.component}
+  this={route.component}
   bind:loading={loading}
   >
-  <Logo bind:loading={loading} target="/" />
+  <Logo bind:loading={loading} />
   <NavItem icon="github" 
            style="float: right"
            target="https://github.com/pylover/adia" />

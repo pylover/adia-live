@@ -120,7 +120,7 @@ export default {
     // In gh-pages environment, router should offset paths by basePath.
     replace({
       preventAssignment: true,
-      basePath: JSON.stringify(production? '/adia': ''),
+      basePath: production? '/adia': '',
       appVersion: packageJson.version 
     }),
 	],

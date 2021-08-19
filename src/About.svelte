@@ -27,7 +27,7 @@
   <ul class="all10">
   {#each docDists as v, i}
     <li>
-      <a href="{baseUrl}/docs/{v}/html/">
+      <a href="basePath/docs/{v}/html/">
         v{v}
         {#if i == 0}
           <i> (latest) </i>
@@ -44,7 +44,7 @@
   <ul class="all10">
   {#each jsDists as v, i}
     <li>
-      <a href="{baseUrl}/jsdist/adia-{v}.tar.gz">
+      <a href="basePath/jsdist/adia-{v}.tar.gz">
         adia-{v}.tar.gz
         {#if i == 0}
           <i> (latest) </i>
@@ -93,7 +93,6 @@ export let loading = true
 let loadingError;
 let jsDists = [];
 let docDists = [];
-const baseUrl = basePath;
 let adiaVer = 'loading...';
 
 function getADiaVersion(ev) {
@@ -109,8 +108,8 @@ onMount(async () => {
   getADiaVersion()
   try {
     let [js, doc] = await Promise.all([
-      fetch(`${basePath}/jsdist/index.json?count=10`).then(resp => resp.json()),
-      fetch(`${basePath}/docs/index.json?count=9`).then(resp => resp.json()),
+      fetch('basePath/jsdist/index.json?count=10').then(resp => resp.json()),
+      fetch('basePath/docs/index.json?count=9').then(resp => resp.json()),
     ]);
     jsDists = js;
     docDists = doc;

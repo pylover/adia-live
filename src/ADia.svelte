@@ -3,9 +3,11 @@
 <div class="main-wrapper" >
 <nav>
   <slot></slot>
-  <NavItem icon="question" 
-           style="float: right"
-           target="/about" />
+  <NavItem 
+     icon="question" 
+     style="float: right"
+     target="/about"
+  />
   <span> { status }</span>
 </nav>
 <div
