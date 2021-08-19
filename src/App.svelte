@@ -27,6 +27,13 @@ export let title
 
 $: spin = busy || processing;
 
+/* Navigation */
+function browserNavigate(ev) {
+  const target = ev.state.target
+  navigate(target)
+  return false
+};
+
 function navigate(target) {
   route = routes[target];
 
@@ -35,7 +42,9 @@ function navigate(target) {
     route = notFound;
   }
 
-  window.history.pushState({}, 
+  window.history.pushState({
+    target
+  }, 
     route.title, 
     `${window.location.origin}basePath${target}`
   );
@@ -91,6 +100,9 @@ nav
   font-size: 2em
 
 </style>
+
+
+<svelte:window on:popstate={browserNavigate} />
 
 <Icons />
 
