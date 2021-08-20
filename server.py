@@ -22,7 +22,7 @@ def get(req, *, count=5):
 app.staticdirectory('/', 'public', default=True, fallback=True)
 app.ready()
 try:
-    app.climain(['s'])
+    app.climain(['s', '-b0.0.0.0:8080'])
 except OSError:
     print('The port is alredy taken.')
     pass
