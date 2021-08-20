@@ -63,8 +63,12 @@
   $: if (textarea) {
     /* Tokenize */
     const {tokens, lines} = tokenize(value)
-    updateScrollPosition()
     lineCount = lines
+    
+    /* Scrollbars */
+    updateScrollPosition()
+    
+    /* Colorize */
     colorize(pre, textarea, tokens)
   }
 </script>
@@ -85,10 +89,7 @@ textarea
   caret-color: $fg
   resize: none
 
-pre
-  &::-webkit-scrollbar
-    display: none
- 
+
 textarea,
 pre
   overflow-x: auto
@@ -103,6 +104,12 @@ pre
   font-size: $fontsize
   vertical-align: baseline
 
+pre
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-corner
+    background: none 
+ 
 .numbers
   overflow-x: auto
   position: absolute
