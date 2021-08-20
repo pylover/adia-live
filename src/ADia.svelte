@@ -37,7 +37,8 @@
       spellcheck="false"
       wrap="off"
       class="pad1"
-      disabled>{ diagram }</textarea>
+      bind:value={diagram}
+      disabled></textarea>
   </div>
 </div>
 </div>
@@ -119,16 +120,6 @@ foo -> bar: Bye() => See U there
     window.removeEventListener("mousemove", resize)
   }
 
-  ///* Create ADia instance */
-  //const aDia = new ADia({
-  //  delay:   800,  // ms
-  //  init: (aDia) => {},
-  //  input:   ()  => {
-  //    localStorage.setItem("editorText", source)
-  //    return source
-  //  },
-  //})
-
   $: if (source != undefined) {
     aDia.go()
   }
@@ -143,13 +134,11 @@ foo -> bar: Bye() => See U there
     }
 
     aDia.input = () => source
-    aDia.addHook('result', () => {
-      diagram = ''
-    });
-    aDia.addHook('error', (aDia, err) => diagram = err);
-    aDia.addHook('success', (aDia, dia) => diagram = dia);
+    aDia.onresult = () => diagram = '',
+    aDia.onerror = (aDia, err) => diagram = err
+    aDia.onsuccess = (aDia, dia) => diagram = dia
     busy = false
-    //aDia.go()
+    aDia.source = ''
   })
 </script>
 

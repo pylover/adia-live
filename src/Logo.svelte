@@ -3,7 +3,6 @@ import { getContext } from 'svelte';
 
 const { navigate } = getContext('nav')
 
-// TODO: use evelte store
 export let spin = true
 
 </script>

@@ -1,7 +1,7 @@
 PIP = $(shell which pip3)
 BRYTHON_REPO = https://raw.githubusercontent.com/brython-dev/brython
 BRYTHON_URL = $(BRYTHON_REPO)/master/www/src
-ADIA_VER = 3.0
+ADIA_VER = 4.0
 ADIA_URL = https://pylover.github.io/adia/jsdist
 
 all: build

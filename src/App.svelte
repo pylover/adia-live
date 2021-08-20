@@ -6,7 +6,7 @@ import Logo from './Logo.svelte'
 import ADia from './ADia.svelte';
 import About from './About.svelte';
 import NotFound from './NotFound.svelte';
-
+import { adiaVersion } from './stores.js';
 
 const routes = {
   '/':      {title: 'Live Demo',  component: ADia  },
@@ -28,13 +28,7 @@ export let title
 $: spin = busy || processing;
 
 /* Navigation */
-function browserNavigate(ev) {
-  const target = ev.state.target
-  navigate(target)
-  return false
-};
-
-function navigate(target) {
+function softNavigate(target) {
   route = routes[target];
 
   /* 404 */
@@ -42,15 +36,20 @@ function navigate(target) {
     route = notFound;
   }
 
+  /* Set the page title */
+  document.title = `${title} -> ${route.title}`
+  return false
+}
+
+
+function navigate(target) {
+  softNavigate(target)
   window.history.pushState({
     target
   }, 
     route.title, 
     `${window.location.origin}basePath${target}`
   );
-
-  /* Set the page title */
-  document.title = `${title} -> ${route.title}`
 }
 setContext('nav', {navigate})
 
@@ -60,10 +59,13 @@ navigate(current)
 
 /* ADia configuration */
 aDia.delay = 300
-aDia.addHook('init', () => loading = false);
-aDia.addHook('status', (aDia, state) => {
+aDia.oninit = (adia) => {
+  adiaVersion.set(adia.__version__)
+  loading = false;
+}
+aDia.onstatus = (aDia, state) => {
   processing = state == 'processing'
-});
+};
 
 </script>
 
@@ -102,7 +104,7 @@ nav
 </style>
 
 
-<svelte:window on:popstate={browserNavigate} />
+<svelte:window on:popstate={e => softNavigate(e.state.target)} />
 
 <Icons />
 

@@ -83,7 +83,8 @@
 </style>
 <script>
 import NavItem from './NavItem.svelte'
-import { onMount } from 'svelte';
+import { onMount } from 'svelte'
+import { adiaVersion } from './stores.js'
 
 const repos = [
   'https://github.com/pylover/adia',
@@ -95,16 +96,9 @@ let jsDists = [];
 let docDists = [];
 let adiaVer = 'loading...';
 
-
-function updateADiaVersion() {
-  adiaVer = window.aDia.__version__
-}
-
-aDia.addHook('init', updateADiaVersion);
-
-$: if (!busy) {
-  updateADiaVersion()
-}
+adiaVersion.subscribe(value => {
+	adiaVer = value;
+});
 
 onMount(async () => {
   try {
