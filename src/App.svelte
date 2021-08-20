@@ -103,7 +103,6 @@ nav
 
 </style>
 
-
 <svelte:window on:popstate={e => softNavigate(e.state.target)} />
 
 <Icons />
