@@ -133,7 +133,10 @@ foo -> bar: Bye() => See U there
       source = defaultSource
     }
 
-    aDia.input = () => source
+    aDia.input = () => {
+      localStorage.setItem("editorText", source)
+      return source
+    }
     aDia.onresult = () => diagram = '',
     aDia.onerror = (aDia, err) => diagram = err
     aDia.onsuccess = (aDia, dia) => diagram = dia
