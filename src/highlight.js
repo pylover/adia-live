@@ -5,7 +5,7 @@ const patterns = [
   },
   {
     name: 'comment',
-    pattern: /^\s*#.*(?=$)/, 
+    pattern: /^ *#.*(?=$)/, 
   },
   {
     name: 'return',
@@ -53,15 +53,15 @@ const patterns = [
   },
   {
     name: 'caller',
-    pattern: /(?<=^\s*)\w+\s*(?=->)/,
+    pattern: /(?<=^ *)\w+ *(?=->)/,
   },
   {
     name: 'callee',
-    pattern: /(?<=->)\s*\w+\s*(?=:|$)/,
+    pattern: /(?<=->) *\w+ *(?=:|$)/,
   },
   {
     name: 'keyword',
-    pattern: /(?<=^\s*)(if|elif|else|for|while)(?=:|$)/,
+    pattern: /(?<=^ *)(if|elif|else|for|while)(?=:|$)/,
   },
   {
     name: 'keyop',
