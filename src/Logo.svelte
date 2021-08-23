@@ -28,16 +28,15 @@ button
     width: $navheight
     margin-top: $navheight * .10
     height: $navheight * .7
-
+    
+    /* Animation */
     animation-name: go
     animation-duration: 500ms
     animation-fill-mode: forwards
     animation-iteration-count: infinite
     animation-direction: reverse
-
-.stop
-  animation-iteration-count: 1
-
+    &.stop
+      animation-iteration-count: 1
 
 @keyframes go
     to      { transform: rotate(0deg); }

@@ -81,22 +81,26 @@ const patterns = [
   },
 ]
 
+const namedGroupPatterns = []
+for(let i = 0; i < patterns.length; i++){
+  let pattern = patterns[i];
+  namedGroupPatterns.push(`(?<${pattern.name}>${pattern.pattern.source})`)
+}
+const wholePattern = new RegExp(namedGroupPatterns.join('|'), 'gmi')
+
+
 export function tokenize(input, selectionStartChar, selectionEndChar) {
-  let items = []
   let lines = 0
-  let cols = 0
   let matchText
   let tokenLen = 0
+  const tokens = []
+  
+  /* Finding selected lines here to improve the performance and avoid slip
+     the content by '\n' and another loop over newline characters. */
   let selectionStartLine = -1
   let selectionEndLine = -1
 
-  for(let i = 0; i < patterns.length; i++){
-    let pattern = patterns[i];
-    items.push(`(?<${pattern.name}>${pattern.pattern.source})`)
-  }
-  const whole = new RegExp(items.join('|'), 'gmi')
-  const tokens = []
-  for (const match of input.matchAll(whole)) {
+  for (const match of input.matchAll(wholePattern)) {
     for (let name in match.groups) {
       matchText = match.groups[name]
       if (matchText == undefined) {
@@ -108,7 +112,6 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
         name: name,
         text: matchText,
         row: lines,
-        col: cols,
         index: match.index,
         length: tokenLen
       })
@@ -125,15 +128,12 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
 
       if (name == 'newline') {
         lines++
-        cols = 0
       }
-      else {
-        cols += tokenLen
-      }
-
     }
   }
   
+  /* An extra whitespace will be appended to the end of the list to behave 
+     like the textarea. */
   const last = tokens[tokens.length - 1]
   if (last && last.name == 'newline') {
     const index = last.index + 1
@@ -141,7 +141,6 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
       name: 'whitespace',
       text: ' ',
       row: lines,
-      col: 0,
       index: index,
       length: 1
     })
@@ -154,8 +153,9 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
         (selectionEndChar - index <= 1)) {
       selectionEndLine = lines
     }
-
   }
+
+  /* Return the result */
   lines++
   return {
     tokens,

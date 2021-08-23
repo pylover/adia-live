@@ -36,8 +36,6 @@
     on:keyup={updateSelection}
     on:change={delayedUpdate}
     ></textarea>
-<!-- 
--->
 </div>
 <script>
   import { onMount, onDestroy } from 'svelte'
@@ -114,7 +112,6 @@ textarea
   caret-color: $fg
   resize: none
 
-
 textarea,
 pre
   overflow-x: auto
@@ -146,7 +143,6 @@ pre
   background: $bg-light
   color: $mangool
   line-height: $lineheight
-  -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar
     display: none;
@@ -168,4 +164,5 @@ pre
   line-height: $lineheight
   font-size: $fontsize
   font-family: monospace
+
 </style>
