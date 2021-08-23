@@ -15,7 +15,7 @@
     style="width: { lnWidth }px"
     bind:this={num}
   >
-    {#each [...Array(lineCount).keys()] as l}
+    {#each [...Array(codeInfo.lines).keys()] as l}
       <span>{ leftPad(l + 1, lnDigits, ' ') }</span>
     {/each}
   </div>
@@ -46,9 +46,17 @@
   const lineHeight = 20
   let leftPadding = 4
   let charWidth = 11
-  let lineCount = 1
-  $: lnDigits = lineCount.toString().length
+  $: codeInfo = tokenize(value)
+  $: lnDigits = codeInfo.lines.toString().length
   $: lnWidth = lnDigits * charWidth + 12
+
+  $: if (textarea) {
+    /* Scrollbars */
+    updateScrollPosition()
+    
+    /* Colorize */
+    colorize(pre, textarea, codeInfo.tokens)
+  }
 
   function monospaceMassureInit(element) {
     charWidth = element.clientWidth
@@ -60,17 +68,6 @@
     num.scrollTop = textarea.scrollTop
   }
 
-  $: if (textarea) {
-    /* Tokenize */
-    const {tokens, lines} = tokenize(value)
-    lineCount = lines
-    
-    /* Scrollbars */
-    updateScrollPosition()
-    
-    /* Colorize */
-    colorize(pre, textarea, tokens)
-  }
 </script>
 
 <style type="text/sass">
