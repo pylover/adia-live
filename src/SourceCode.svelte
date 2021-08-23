@@ -34,6 +34,7 @@
     bind:this={textarea}
     on:scroll={updateScrollPosition}
     on:keyup={updateSelection}
+    on:change={delayedUpdate}
     ></textarea>
 <!-- 
 -->
@@ -74,6 +75,11 @@
     }
   }
 
+  function delayedUpdate() {
+    setTimeout(() => {
+      codeInfo = tokenize(textarea.value, selectionStartChar, selectionEndChar)
+    }, 100)
+  }
 
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
@@ -89,6 +95,7 @@
   onDestroy(function() {
     document.removeEventListener('selectionchange', updateSelection)
   })
+  
 </script>
 
 <style type="text/sass">
