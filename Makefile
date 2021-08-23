@@ -11,7 +11,7 @@ build:
 	npm run build
 
 .PHONY: env
-env: adia public/brython.js
+env: adia public/brython.js public/brython_stdlib.js
 	$(PIP) install 'yhttp >= 2.13.2'
 	npm install
 
@@ -22,13 +22,16 @@ serve:
 public/brython.js:
 	curl "$(BRYTHON_URL)/brython.js" > $@
 
+public/brython_stdlib.js:
+	curl "$(BRYTHON_URL)/brython_stdlib.js" > $@
+
 .PHONY: adia
 adia:
 	- mkdir -p  $(ADIA_DIR)
 	curl "$(ADIA_URL)/adia-$(ADIA_VER).tar.gz" | tar -zxvC public
 	
 clean::
-	- rm public/brython.js
+	- rm public/brython*.js
 	- rm public/adia*.js
 	- rm public/adia*.py
 	- rm -rf public/adia
