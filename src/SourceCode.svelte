@@ -33,12 +33,13 @@
     bind:value={value}
     bind:this={textarea}
     on:scroll={updateScrollPosition}
+    on:keyup={updateSelection}
     ></textarea>
 <!-- 
 -->
 </div>
 <script>
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { tokenize } from './highlight.js' 
   import { leftPad } from './helpers.js'
   
@@ -73,7 +74,6 @@
     }
   }
 
-  document.addEventListener('selectionchange', updateSelection)
 
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
@@ -83,6 +83,11 @@
 
   onMount(function() {
     charWidth = meassure.clientWidth
+    document.addEventListener('selectionchange', updateSelection)
+  })
+
+  onDestroy(function() {
+    document.removeEventListener('selectionchange', updateSelection)
   })
 </script>
 

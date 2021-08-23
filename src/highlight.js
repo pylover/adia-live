@@ -109,16 +109,17 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
         text: matchText,
         row: lines,
         col: cols,
+        index: match.index,
         length: tokenLen
       })
       
       if ((selectionStartChar >= match.index) && 
-          (selectionStartChar - match.index < tokenLen)) {
+          (selectionStartChar - match.index <= tokenLen)) {
         selectionStartLine = lines
       }
 
       if ((selectionEndChar >= match.index) && 
-          (selectionEndChar - match.index < tokenLen)) {
+          (selectionEndChar - match.index <= tokenLen)) {
         selectionEndLine = lines
       }
 
@@ -135,13 +136,25 @@ export function tokenize(input, selectionStartChar, selectionEndChar) {
   
   const last = tokens[tokens.length - 1]
   if (last && last.name == 'newline') {
+    const index = last.index + 1
     tokens.push({
       name: 'whitespace',
       text: ' ',
       row: lines,
-      col: cols,
+      col: 0,
+      index: index,
       length: 1
     })
+    
+    if ((selectionStartChar >= index) && 
+        (selectionStartChar - index <= 1)) {
+      selectionStartLine = lines
+    }
+    if ((selectionEndChar >= index) && 
+        (selectionEndChar - index <= 1)) {
+      selectionEndLine = lines
+    }
+
   }
   lines++
   return {
