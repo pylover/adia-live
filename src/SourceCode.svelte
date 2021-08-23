@@ -9,7 +9,9 @@
     bind:this={pre}
   >
   {#each codeInfo.tokens as token}
-    <span class={token.name}>{token.text}</span>
+    <span 
+     class={token.name}
+    >{token.text}</span>
   {/each}
   </pre>
   <div 
@@ -18,7 +20,10 @@
     bind:this={num}
   >
     {#each [...Array(codeInfo.lines).keys()] as l}
-      <span>{ leftPad(l + 1, lnDigits, ' ') }</span>
+      <span
+        class={(l >= codeInfo.selectionStartLine) && (l <=
+        codeInfo.selectionEndLine)? 'selected': ''}
+      >{ leftPad(l + 1, lnDigits, ' ') }</span>
     {/each}
   </div>
   <textarea
@@ -49,9 +54,26 @@
   const lineHeight = 20
   let leftPadding = 4
   let charWidth = 11
-  $: codeInfo = tokenize(value)
+  
+  /* Selection */
+  let selectionStartChar = -1
+  let selectionEndChar = -1
+
+  $: codeInfo = tokenize(value, selectionStartChar, selectionEndChar)
   $: lnDigits = codeInfo.lines.toString().length
   $: lnWidth = lnDigits * charWidth + 12
+  
+  function updateSelection() {
+    const activeElement = document.activeElement
+  
+    // make sure this is your textarea
+    if (activeElement === textarea) {
+      selectionStartChar = textarea.selectionStart
+      selectionEndChar = textarea.selectionEnd
+    }
+  }
+
+  document.addEventListener('selectionchange', updateSelection)
 
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
@@ -124,7 +146,9 @@ pre
     padding-right: 4px
     box-shadow: inset 0 0 2px black
     vertical-align: baseline
-
+    &.selected
+      background: $jingool
+      
 .monospace-massure
   position: absolute
   top: -100px

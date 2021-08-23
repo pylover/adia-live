@@ -81,10 +81,14 @@ const patterns = [
   },
 ]
 
-export function tokenize(input) {
+export function tokenize(input, selectionStartChar, selectionEndChar) {
   let items = []
   let lines = 0
+  let cols = 0
   let matchText
+  let tokenLen = 0
+  let selectionStartLine = -1
+  let selectionEndLine = -1
 
   for(let i = 0; i < patterns.length; i++){
     let pattern = patterns[i];
@@ -98,13 +102,34 @@ export function tokenize(input) {
       if (matchText == undefined) {
         continue
       }
-      if (name == 'newline') {
-        lines++
-      }
+      
+      tokenLen = matchText.length
       tokens.push({
         name: name,
-        text: matchText
+        text: matchText,
+        row: lines,
+        col: cols,
+        length: tokenLen
       })
+      
+      if ((selectionStartChar >= match.index) && 
+          (selectionStartChar - match.index < tokenLen)) {
+        selectionStartLine = lines
+      }
+
+      if ((selectionEndChar >= match.index) && 
+          (selectionEndChar - match.index < tokenLen)) {
+        selectionEndLine = lines
+      }
+
+      if (name == 'newline') {
+        lines++
+        cols = 0
+      }
+      else {
+        cols += tokenLen
+      }
+
     }
   }
   
@@ -112,12 +137,17 @@ export function tokenize(input) {
   if (last && last.name == 'newline') {
     tokens.push({
       name: 'whitespace',
-      text: ' '
+      text: ' ',
+      row: lines,
+      col: cols,
+      length: 1
     })
   }
   lines++
   return {
     tokens,
-    lines
+    lines,
+    selectionStartLine,
+    selectionEndLine,
   }
 }
