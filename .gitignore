@@ -1,6 +1,7 @@
 /node_modules/
 /public/build
 /public/brython.js
+/public/brython_stdlib.js
 /public/adia.js
 /public/adia.stdlib.js
 /public/adia.bundle.js

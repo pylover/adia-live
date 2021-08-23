@@ -1,7 +1,6 @@
 <span 
   class="monospace-massure"
-  bind:this={num}
-  use:monospaceMassureInit
+  bind:this={meassure}
   >X</span>
 <div id="sourceParent">
   <pre
@@ -9,6 +8,9 @@
     style="padding-left: { lnWidth + leftPadding }px"
     bind:this={pre}
   >
+  {#each codeInfo.tokens as token}
+    <span class={token.name}>{token.text}</span>
+  {/each}
   </pre>
   <div 
     class="numbers" 
@@ -32,12 +34,13 @@
 </div>
 <script>
   import { onMount } from 'svelte'
-  import { tokenize, colorize } from './highlight.js' 
+  import { tokenize } from './highlight.js' 
   import { leftPad } from './helpers.js'
   
   export let value = ''
 
   /* Elements */
+  let meassure
   let pre
   let num
   let textarea
@@ -50,24 +53,15 @@
   $: lnDigits = codeInfo.lines.toString().length
   $: lnWidth = lnDigits * charWidth + 12
 
-  $: if (textarea) {
-    /* Scrollbars */
-    updateScrollPosition()
-    
-    /* Colorize */
-    colorize(pre, textarea, codeInfo.tokens)
-  }
-
-  function monospaceMassureInit(element) {
-    charWidth = element.clientWidth
-  }
-
   function updateScrollPosition() {
     pre.scrollLeft = textarea.scrollLeft
     pre.scrollTop = textarea.scrollTop
     num.scrollTop = textarea.scrollTop
   }
 
+  onMount(function() {
+    charWidth = meassure.clientWidth
+  })
 </script>
 
 <style type="text/sass">
