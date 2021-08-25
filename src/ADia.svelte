@@ -38,8 +38,10 @@
   import { ADia } from './adia.js'
 
   /* Properties */
+  export let key = 'adia-main'
   export let busy = true
   export let loading = true
+  export let persistent = true
 
   /* Elements */
   let sourceArea
@@ -50,10 +52,9 @@
   let innerWidth
   let leftWidth
 
-  let leftSize = localStorage.getItem("leftSize") ? 
-    `${localStorage.getItem("leftSize")}%` : '20%'
-  let rightSize = localStorage.getItem("leftSize") ? 
-    `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '80%'
+  let leftSize = localGet('leftSize') ? `${localGet('leftSize')}%` : '20%'
+  let rightSize = localGet('leftSize') ? 
+    `${100 - Math.round(localGet('leftSize'))}%` : '80%'
   
   /* ADia Worker */
   let diagram = ''
@@ -82,30 +83,41 @@ foo -> bar: Bye() => See U there
   if: baz is there
     bar -> baz: Bye()`
 
+  function localStore(name, value) {
+    if (persistent) {
+      localStorage.setItem(`${key}-${name}`, value)
+    }
+  }
+
+  function localGet(name, value) {
+    if (persistent) {
+      return localStorage.getItem(`${key}-${name}`)
+    }
+    return null
+  }
+
   function resizeStart(e) {
     lastSeparatorLocation = {
       e,
       leftWidth: left.offsetWidth,
       rightWidth: right.offsetWidth,
     }
-    window.addEventListener("mousemove", resize)
+    window.addEventListener('mousemove', resize)
   }
-
+  
   function resize (e) {
     if (e.clientX !== lastSeparatorLocation.e.clientX) {
       let delta = e.clientX - lastSeparatorLocation.e.clientX
       delta = Math.min(Math.max(delta, -lastSeparatorLocation.leftWidth),
         lastSeparatorLocation.rightWidth)
-      left.style.width = lastSeparatorLocation.leftWidth + delta + "px"
-      right.style.width = lastSeparatorLocation.rightWidth - delta + "px"
+      left.style.width = lastSeparatorLocation.leftWidth + delta + 'px'
+      right.style.width = lastSeparatorLocation.rightWidth - delta + 'px'
     }
   }
 
   function resizeStop () {
-    localStorage.setItem("leftSize", 
-      Math.round(leftWidth / (innerWidth - 14) * 100)
-    )
-    window.removeEventListener("mousemove", resize)
+    localStore('leftSize', Math.round(leftWidth / (innerWidth - 14) * 100))
+    window.removeEventListener('mousemove', resize)
   }
 
   $: if (source != undefined) {
@@ -122,7 +134,7 @@ foo -> bar: Bye() => See U there
     busy = state != 'idle'
   };
   aDia.input = () => {
-    localStorage.setItem("editorText", source)
+    localStore('editorText', source)
     return source
   }
   aDia.onresult = () => diagram = '',
@@ -130,7 +142,7 @@ foo -> bar: Bye() => See U there
   aDia.onsuccess = (aDia, dia) => diagram = dia
 
   onMount(async function() {
-    let localText = localStorage.getItem("editorText")
+    let localText = localGet('editorText')
     if (localText != null && localText.trim().length > 0) {
       source = localText
     }
