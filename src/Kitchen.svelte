@@ -12,9 +12,6 @@
 <style type="text/sass" scoped>
   @import 'styles/grid'
   
-  .adia
-    height: 500px
-
 </style>
 <script>
 import { onMount } from 'svelte'

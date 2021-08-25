@@ -36,21 +36,45 @@ export let loading = true
 
 const sections = [
   {
-    title: 'Simple Call Stack',
-    source: `diagram: foo
+    title: 'Call Subject and Return Value',
+    source: `diagram: Call stack
+sequence:
+
+foo -> bar: baz() => qux
+`
+  },
+  {
+    title: 'Call Stack',
+    source: `diagram: Call stack
 sequence:
 
 foo -> bar
+  bar -> baz
+  bar -> baz
 `
   },
   {
     title: 'Condition',
-    source: `diagram: foo
-sequence: condition
+    source: `diagram: Condition
+sequence:
 
 if: a > 0
   foo -> bar
+elif: a < 0
+  foo -> baz
+else:
+  foo -> qux
+`
+  },
+  {
+    title: 'Loop',
+    source: `diagram: Loop
+sequence:
+
+for: every item
+  foo -> bar
 `
   }
+
 ]
 </script>
