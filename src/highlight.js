@@ -49,7 +49,7 @@ const patterns = [
   },
   {
     name: 'notemodulesecond',
-    pattern: /(?<=@.*~\s)\w+/,
+    pattern: /(?<=@.*~ *)\w+/,
   },
   {
     name: 'caller',

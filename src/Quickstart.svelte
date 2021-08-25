@@ -16,6 +16,15 @@
          />
     </div>
   {/each}
+  <h2 class="all10">
+    Future reading
+    <hr />
+  </h2>
+  <p class="all10">
+    <a href="basePath/docs/latest/html/">
+      Documentation
+    </a>
+  </p>
 </div>
 <div class="sm0 md0 lg1 xg1"></div>
 
@@ -23,7 +32,7 @@
   @import 'styles/grid'
   
   .adia
-    height: 500px
+    height: 400px
 
 </style>
 <script>
@@ -37,25 +46,26 @@ export let loading = true
 const sections = [
   {
     title: 'Call Subject and Return Value',
-    source: `diagram: Call stack
+    source: `diagram:
 sequence:
 
 foo -> bar: baz() => qux
+foo -> foo: quux() => thud
 `
   },
   {
     title: 'Call Stack',
-    source: `diagram: Call stack
+    source: `diagram:
 sequence:
 
 foo -> bar
   bar -> baz
-  bar -> baz
+  bar -> bar
 `
   },
   {
     title: 'Condition',
-    source: `diagram: Condition
+    source: `diagram:
 sequence:
 
 if: a > 0
@@ -67,14 +77,61 @@ else:
 `
   },
   {
-    title: 'Loop',
-    source: `diagram: Loop
+    title: 'For Loop',
+    source: `diagram:
 sequence:
 
 for: every item
   foo -> bar
 `
-  }
+  },
+  {
+    title: 'While Loop',
+    source: `diagram: 
+sequence:
 
+while: true
+  foo -> bar
+`
+  },
+  {
+    title: 'Note',
+    source: `diagram: 
+sequence:
+
+@foo: Lorem Ipsum
+@foo ~ bar: Lorem Ipsum
+foo -> bar
+  bar -> baz 
+    @baz: Lorem Ipsum
+  @bar: Lorem Ipsum
+`
+  },
+  {
+    title: 'Comments',
+    source: `diagram: 
+
+# This is a commented line
+`
+  },
+  {
+    title: 'Metadata',
+    source: `diagram: 
+
+version: 1.2.3a4
+author: Alice
+`
+  },
+  {
+    title: 'Module\'s Title',
+    source: `diagram: 
+sequence:
+
+foo.title: Foo Client
+bar.title: Bar API
+
+foo -> bar
+`
+  }
 ]
 </script>
