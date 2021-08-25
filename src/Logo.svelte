@@ -12,7 +12,7 @@ export let spin = true
    >
     <use xlink:href="#icon-pacman"></use>
   </svg>
-  <h1>ADia</h1>
+  <h4>ADia</h4>
 </button>
 <style lang="sass" type="text/sass" scoped>
 

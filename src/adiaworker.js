@@ -1,4 +1,4 @@
-export class ADia {
+export class ADiaWorker {
   delay = 0; // ms
   loadingProbeInterval = 300; // ms
   input;
@@ -17,7 +17,8 @@ export class ADia {
   /* Private Fields */
   #_delayTimer;
 
-  constructor() {
+  constructor(key) {
+    this.key = key
     this.ensureADiaAPI();
   }
   
@@ -48,10 +49,14 @@ export class ADia {
       return;
     }
     
-    window.__adia__.callback = this.onResult.bind(this);
-    window.__adia__.send('?version');
+    window.__adia__.registerCallback(this.key, this.onResult.bind(this))
+    window.__adia__.send(this.key, '?version');
   }
   
+  cleanup() {
+    window.__adia__.unregisterCallback(this.key)
+  }
+
   send() {
     if (this.input === undefined) {
       return;
@@ -64,7 +69,7 @@ export class ADia {
     
     this.status = 'processing';
     this.source = newSource;
-    window.__adia__.send(this.source);
+    window.__adia__.send(this.key, this.source);
   }
 
   go() {
@@ -85,8 +90,8 @@ export class ADia {
   }
   
   onResult(result) {
-    if (result.version !== undefined) {
-      this.__version__ = result.version
+    if (result.type ==  'version') {
+      this.__version__ = result.answer
       this.hook('oninit')
     }
     else {
@@ -95,7 +100,7 @@ export class ADia {
         this.hook('onerror', result.error)
       }
       else {
-        this.hook('onsuccess', result.diagram)
+        this.hook('onsuccess', result.answer)
       }
     }
     this.status = 'idle';

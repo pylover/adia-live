@@ -140,7 +140,6 @@ pre
   height: 100%
   z-index: 10
   font-size: $fontsize - 2
-  background: $bg-light
   color: $mangool
   line-height: $lineheight
   scrollbar-width: none;  /* Firefox */
@@ -152,6 +151,7 @@ pre
     width: 100%
     text-align: right
     padding-right: 4px
+    background: $bg-light
     box-shadow: inset 0 0 2px black
     vertical-align: baseline
     &.selected

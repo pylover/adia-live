@@ -16,7 +16,7 @@
 import { getContext } from 'svelte';
 export let title = '';
 export let target;
-export let icon;
+export let icon = null;
 export let cssClass = '';
 export let id = '';
 export let style = '';

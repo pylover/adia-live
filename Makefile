@@ -29,6 +29,9 @@ public/brython_stdlib.js:
 adia:
 	- mkdir -p  $(ADIA_DIR)
 	curl "$(ADIA_URL)/adia-$(ADIA_VER).tar.gz" | tar -zxvC public
+	rm public/adia.js
+	rm public/adia_worker.py
+	rm public/adia.bundle.js
 	
 clean::
 	- rm public/brython*.js

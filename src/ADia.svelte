@@ -3,7 +3,7 @@
   <div
     bind:this={left}
     bind:clientWidth={leftWidth}
-    style="--left-size: {leftSize}"
+    style="--left-size: {sourceAreaWidth}%"
     class="left">
     <SourceCode 
       bind:this={sourceArea} 
@@ -19,7 +19,7 @@
   
   <div
     bind:this={right}
-    style="--right-size: {rightSize}"
+    style="--right-size: {diagramAreaWidth}%"
     class="right"
   >
     <textarea 
@@ -34,14 +34,19 @@
 <script>
   import NavItem from './NavItem.svelte'
   import SourceCode from './SourceCode.svelte'
-  import { onMount } from 'svelte'
-  import { ADia } from './adia.js'
+  import { onMount, onDestroy } from 'svelte'
+  import { ADiaWorker } from './adiaworker.js'
 
   /* Properties */
   export let key = 'adia-main'
   export let busy = true
   export let loading = true
   export let persistent = true
+  
+  export let sourceAreaWidth = localGet('sourceAreaWidth') ? 
+    localGet('sourceAreaWidth') : 30
+
+  $: diagramAreaWidth = 100 - sourceAreaWidth 
 
   /* Elements */
   let sourceArea
@@ -52,14 +57,10 @@
   let innerWidth
   let leftWidth
 
-  let leftSize = localGet('leftSize') ? `${localGet('leftSize')}%` : '20%'
-  let rightSize = localGet('leftSize') ? 
-    `${100 - Math.round(localGet('leftSize'))}%` : '80%'
-  
   /* ADia Worker */
   let diagram = ''
   let source
-  let defaultSource = `# Live Demo
+  export let defaultSource = `# Live Demo
 
 diagram: Foo
 author: Alice
@@ -116,7 +117,8 @@ foo -> bar: Bye() => See U there
   }
 
   function resizeStop () {
-    localStore('leftSize', Math.round(leftWidth / (innerWidth - 14) * 100))
+    localStore('sourceAreaWidth', 
+      Math.round(leftWidth / (innerWidth - 14) * 100))
     window.removeEventListener('mousemove', resize)
   }
 
@@ -125,7 +127,7 @@ foo -> bar: Bye() => See U there
   }
 
   /* ADia configuration */
-  const aDia = new ADia()
+  const aDia = new ADiaWorker(key)
   aDia.delay = 300
   aDia.oninit = () => {
     loading = false
@@ -150,6 +152,10 @@ foo -> bar: Bye() => See U there
       source = defaultSource
     }
   })
+
+  onDestroy(async function() {
+    aDia.cleanup()
+  })
 </script>
 
 <style type="text/sass" scoped>
@@ -169,7 +175,6 @@ foo -> bar: Bye() => See U there
   width: var(--left-size)
   min-width: 100px
   height: 100%
-  border-top: 1px solid black
 
 .right
   width: var(--right-size)
@@ -178,15 +183,6 @@ foo -> bar: Bye() => See U there
   background-color: $bg-light
   overflow-y: auto
   overflow-x: hidden
-
-nav
-  background-color: $bg-dark
-  width: 100%
-  display: block
-  height: $navheight
-  border-style: inset
-  border-bottom: 1px solid black
-  padding-right: $gutter
 
 textarea
   display: block
@@ -197,7 +193,6 @@ textarea
   outline: 1px solid $bg-dark
   color: $fg
   resize: none
-  font-size: 14px
 
 </style>
 

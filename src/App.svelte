@@ -11,16 +11,9 @@
 <!-- Navbar -->
 <nav>
   <Logo bind:spin />
-  <NavItem 
-    title="About" 
-    target="/about" 
-    bind:current
-  />
-  <NavItem 
-     title="Live Demo" 
-     target="/"
-    bind:current
-  />
+  <NavItem bind:current title="About"     target="/about" />
+  <NavItem bind:current title="Quickstart"  target="/quickstart" />
+  <NavItem bind:current title="Live Demo" target="/" />
 </nav>
   
 <div class="content">
@@ -31,6 +24,7 @@
   bind:loading
   />
 </div>
+
 <script>
 import { setContext } from 'svelte';
 import Icons from './Icons.svelte';
@@ -38,11 +32,15 @@ import NavItem from './NavItem.svelte'
 import Logo from './Logo.svelte'
 import ADia from './ADia.svelte';
 import About from './About.svelte';
+import Quickstart from './Quickstart.svelte';
+import Kitchen from './Kitchen.svelte';
 import NotFound from './NotFound.svelte';
 
 const routes = {
-  '/':      {title: 'Live Demo',  component: ADia  },
-  '/about': {title: 'About',      component: About },
+  '/':           {title: 'Live Demo',  component: ADia       },
+  '/about':      {title: 'About',      component: About      },
+  '/quickstart': {title: 'Quickstart', component: Quickstart },
+  '/kitchen':    {title: 'Kitchen',    component: Kitchen    },
 };
 
 const notFound = {
