@@ -1,12 +1,3 @@
-
-<div class="main-wrapper" >
-<nav>
-  <slot></slot>
-  <NavItem icon="paint" 
-           style="float: right"
-           target="/" />
-</nav>
-
 <div id="about" class="sm10 md10 lg8 xg6">
    <h4 class="all10">
     About
@@ -75,7 +66,6 @@
   {/if}
   -->
 </div>
-</div>
 
 <style type="text/sass" scoped>
   @import 'styles/grid'
@@ -90,8 +80,11 @@ const repos = [
   'https://github.com/pylover/adia',
   'https://github.com/pylover/adia-live',
 ];
+
+/* Properties */
 export let busy = true
 export let loading = true
+
 let loadingError;
 let jsDists = [];
 let docDists = [];
@@ -101,8 +94,8 @@ let adiaVer = 'loading...';
 onMount(async () => {
   try {
     let [js, doc] = await Promise.all([
-      fetch('basePath/jsdist/index.json?count=10').then(resp => resp.json()),
-      fetch('basePath/docs/index.json?count=9').then(resp => resp.json()),
+      fetch('basePath/jsdist/index.json?count=11').then(resp => resp.json()),
+      fetch('basePath/docs/index.json?count=19').then(resp => resp.json()),
     ]);
     jsDists = js;
     docDists = doc;

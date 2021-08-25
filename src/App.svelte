@@ -1,3 +1,36 @@
+<svelte:window on:popstate={e => softNavigate(e.state.target)} />
+<Icons />
+
+<!-- Initialization Overlay -->
+{#if loading}
+  <div class="loading all10">
+    <p>Loading, please wait ... </p>
+  </div>
+{/if}
+
+<!-- Navbar -->
+<nav>
+  <Logo bind:spin />
+  <NavItem 
+    title="About" 
+    target="/about" 
+    bind:current
+  />
+  <NavItem 
+     title="Live Demo" 
+     target="/"
+    bind:current
+  />
+</nav>
+  
+<div class="content">
+  <!-- Content -->
+  <svelte:component  
+  this={route.component}
+  bind:busy
+  bind:loading
+  />
+</div>
 <script>
 import { setContext } from 'svelte';
 import Icons from './Icons.svelte';
@@ -20,12 +53,14 @@ const notFound = {
 let busy = true;
 let loading = true;
 let route
+let current
 export let title
 
 $: spin = busy;
 
 /* Navigation */
 function softNavigate(target) {
+  current = target
   route = routes[target];
 
   /* 404 */
@@ -51,21 +86,22 @@ function navigate(target) {
 setContext('nav', {navigate})
 
 /* Match current route */
-let current = window.location.pathname.replace(new RegExp('^basePath'), '')
+current = window.location.pathname.replace(new RegExp('^basePath'), '')
 navigate(current)
 
 </script>
 
 <style lang="sass" type="text/sass" global>
 body
+  height: 100%
   color: $fg
   font-family: monospace
-
-.main-wrapper
   background-color: $bg-light
-  min-height: 100%
+
+.content
   width: 100%
-  float: left
+  height: calc(100% - #{$navheight})
+  overflow-y: auto
 
 nav
   background-color: $bg-dark
@@ -73,7 +109,7 @@ nav
   display: block
   height: $navheight
   border-style: inset
-  border-bottom: 1px solid black
+  border-bottom: 1px solid $bg-light
   padding-right: $gutter
 
 .loading
@@ -89,27 +125,3 @@ nav
   font-size: 2em
 
 </style>
-
-<svelte:window on:popstate={e => softNavigate(e.state.target)} />
-
-<Icons />
-
-<!-- Initialization Overlay -->
-{#if loading}
-  <div class="loading all10">
-    <p>Loading, please wait ... </p>
-  </div>
-{/if}
-
-<!-- Content -->
-  <svelte:component  
-  this={route.component}
-  bind:busy
-  bind:loading
-  >
-  <Logo bind:spin />
-  <NavItem icon="github" 
-           style="float: right"
-           target="https://github.com/pylover/adia" />
-</svelte:component>
-

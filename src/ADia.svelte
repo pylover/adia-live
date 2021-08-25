@@ -1,16 +1,5 @@
 <svelte:window bind:innerWidth />
-
-<div class="main-wrapper" >
-<nav>
-  <slot></slot>
-  <NavItem 
-     icon="question" 
-     style="float: right"
-     target="/about"
-  />
-</nav>
-<div
-  class="wrapper">
+<div class="main">
   <div
     bind:this={left}
     bind:clientWidth={leftWidth}
@@ -21,17 +10,18 @@
       bind:value={source} 
     />
   </div>
-
+  
   <div
     class="separator"
     on:mousedown={resizeStart}
     on:mouseup={resizeStop}
   />
-
+  
   <div
     bind:this={right}
     style="--right-size: {rightSize}"
-    class="right">
+    class="right"
+  >
     <textarea 
       spellcheck="false"
       wrap="off"
@@ -39,7 +29,6 @@
       bind:value={diagram}
       disabled></textarea>
   </div>
-</div>
 </div>
 
 <script>
@@ -148,19 +137,15 @@ foo -> bar: Bye() => See U there
     else {
       source = defaultSource
     }
-    //aDia.source = ''
   })
 </script>
 
 <style type="text/sass" scoped>
 
-.main-wrapper
-  height: 100% !important
-
-.wrapper
-  width: 100%
-  height: calc(100% - #{$navheight + $gutter})
+.main
   display: inline-flex
+  height: calc(100% - #{$gutter})
+  width: 100%
 
 .separator
   cursor: col-resize
