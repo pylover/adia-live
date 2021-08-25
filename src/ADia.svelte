@@ -8,7 +8,6 @@
      style="float: right"
      target="/about"
   />
-  <span> { status }</span>
 </nav>
 <div
   class="wrapper">
@@ -47,9 +46,11 @@
   import NavItem from './NavItem.svelte'
   import SourceCode from './SourceCode.svelte'
   import { onMount } from 'svelte'
+  import { ADia } from './adia.js'
 
   /* Properties */
   export let busy = true
+  export let loading = true
 
   /* Elements */
   let sourceArea
@@ -66,9 +67,7 @@
     `${100 - Math.round(localStorage.getItem("leftSize"))}%` : '80%'
   
   /* ADia Worker */
-  let initializing = true
   let diagram = ''
-  let status = ''
   let source
   let defaultSource = `# Live Demo
 
@@ -124,6 +123,23 @@ foo -> bar: Bye() => See U there
     aDia.go()
   }
 
+  /* ADia configuration */
+  const aDia = new ADia()
+  aDia.delay = 300
+  aDia.oninit = () => {
+    loading = false
+  }
+  aDia.onstatus = (aDia, state) => {
+    busy = state != 'idle'
+  };
+  aDia.input = () => {
+    localStorage.setItem("editorText", source)
+    return source
+  }
+  aDia.onresult = () => diagram = '',
+  aDia.onerror = (aDia, err) => diagram = err
+  aDia.onsuccess = (aDia, dia) => diagram = dia
+
   onMount(async function() {
     let localText = localStorage.getItem("editorText")
     if (localText != null && localText.trim().length > 0) {
@@ -132,16 +148,7 @@ foo -> bar: Bye() => See U there
     else {
       source = defaultSource
     }
-
-    aDia.input = () => {
-      localStorage.setItem("editorText", source)
-      return source
-    }
-    aDia.onresult = () => diagram = '',
-    aDia.onerror = (aDia, err) => diagram = err
-    aDia.onsuccess = (aDia, dia) => diagram = dia
-    busy = false
-    aDia.source = ''
+    //aDia.source = ''
   })
 </script>
 

@@ -84,21 +84,19 @@
 <script>
 import NavItem from './NavItem.svelte'
 import { onMount } from 'svelte'
-import { adiaVersion } from './stores.js'
+import { ADia } from './adia.js'
 
 const repos = [
   'https://github.com/pylover/adia',
   'https://github.com/pylover/adia-live',
 ];
 export let busy = true
+export let loading = true
 let loadingError;
 let jsDists = [];
 let docDists = [];
 let adiaVer = 'loading...';
 
-adiaVersion.subscribe(value => {
-	adiaVer = value;
-});
 
 onMount(async () => {
   try {
@@ -113,8 +111,14 @@ onMount(async () => {
     loadingError = `Index loading error: ${err}`
   }
   finally {
-    busy = false
+    loading = false
   }
 });
+
+/* ADia configuration */
+(new ADia()).oninit = (adia) => {
+  adiaVer = adia.__version__
+  busy = false
+}
 
 </script>

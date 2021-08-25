@@ -6,7 +6,6 @@ import Logo from './Logo.svelte'
 import ADia from './ADia.svelte';
 import About from './About.svelte';
 import NotFound from './NotFound.svelte';
-import { adiaVersion } from './stores.js';
 
 const routes = {
   '/':      {title: 'Live Demo',  component: ADia  },
@@ -18,14 +17,12 @@ const notFound = {
   component: NotFound,
 }
 
-let spin = true
 let busy = true;
-let processing = true;
 let loading = true;
 let route
 export let title
 
-$: spin = busy || processing;
+$: spin = busy;
 
 /* Navigation */
 function softNavigate(target) {
@@ -56,16 +53,6 @@ setContext('nav', {navigate})
 /* Match current route */
 let current = window.location.pathname.replace(new RegExp('^basePath'), '')
 navigate(current)
-
-/* ADia configuration */
-aDia.delay = 300
-aDia.oninit = (adia) => {
-  adiaVersion.set(adia.__version__)
-  loading = false;
-}
-aDia.onstatus = (aDia, state) => {
-  processing = state == 'processing'
-};
 
 </script>
 
@@ -118,6 +105,7 @@ nav
   <svelte:component  
   this={route.component}
   bind:busy
+  bind:loading
   >
   <Logo bind:spin />
   <NavItem icon="github" 
