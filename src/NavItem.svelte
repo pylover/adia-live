@@ -1,6 +1,6 @@
 <a 
   {id} 
-  class={cssClass, current == target? 'current': ''}
+  class:current={current == target}
   {style} 
   href={!internal? target: undefined} 
   on:click={internal? click: undefined}
@@ -9,7 +9,7 @@
     <svg><use xlink:href={"#icon-" + icon}></use></svg>
   {/if}
   {#if title}
-    <span class={icon == null ? 'lpad': ''}>{title}</span>
+    <span class:lpad={icon == null}>{title}</span>
   {/if}
 </a>
 <script>
@@ -17,7 +17,6 @@ import { getContext } from 'svelte';
 export let title = '';
 export let target;
 export let icon = null;
-export let cssClass = '';
 export let id = '';
 export let style = '';
 export let current
