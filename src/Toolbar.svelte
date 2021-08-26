@@ -4,7 +4,7 @@
 
 <style type="text/sass">
   .toolbar
-    background: $bg-light
+    background: $bg-dark
     height: $toolheight
 </style>
 

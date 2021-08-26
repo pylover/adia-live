@@ -24,18 +24,14 @@
     style="--right-size: {diagramAreaWidth}%"
     class="right"
   >
-    <textarea 
-      spellcheck="false"
-      wrap="off"
-      class="pad1"
-      bind:value={diagram}
-      disabled></textarea>
+  <Diagram value={diagram}/>
   </div>
 </div>
 
 <script>
   import NavItem from './NavItem.svelte'
   import SourceCode from './SourceCode.svelte'
+  import Diagram from './Diagram.svelte'
   import { onMount, onDestroy } from 'svelte'
   import { ADiaWorker } from './adiaworker.js'
 
@@ -186,16 +182,6 @@ foo -> bar: Bye() => See U there
   background-color: $bg-light
   overflow-y: auto
   overflow-x: hidden
-
-textarea
-  display: block
-  width: 100%
-  height: 100%
-  background: $bg-dark
-  border: none
-  outline: 1px solid $bg-dark
-  color: $fg
-  resize: none
 
 </style>
 

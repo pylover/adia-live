@@ -14,12 +14,12 @@ export let enabled = false;
 <style lang="sass" type="text/sass">
 
 button
+  float: left
   width: $toolheight
   height: $toolheight
   line-height: $toolheight 
   vertical-align: middle
   background: $bg-dark
-  box-shadow: inset 0 0 1px #0f0; 
   &.enabled
     svg
       fill: $mangool
