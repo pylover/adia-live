@@ -10,7 +10,7 @@
 export let title;
 export let icon;
 export let enabled = false;
-export let far = false
+export let far = false;
 </script>
 <style lang="sass" type="text/sass">
 

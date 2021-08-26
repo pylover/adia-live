@@ -6,14 +6,14 @@
  />
 
 <script>
-  import Tool from './Tool.svelte'
+  import Tool from './Tool.svelte';
   
-  export let value
+  export let value;
   
-  let oldValue
+  let oldValue;
 
   async function copy() {
     await navigator.clipboard.writeText(value);
-    oldValue = value
+    oldValue = value;
   }
 </script>

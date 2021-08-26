@@ -57,67 +57,67 @@
     ></textarea>
 </div>
 <script>
-  import { onMount, onDestroy } from 'svelte'
-  import { tokenize } from './highlight.js' 
-  import { leftPad } from './helpers.js'
-  import Toolbar from './Toolbar.svelte'
-  import Tool from './Tool.svelte'
-  import Copy from './Copy.svelte'
+  import { onMount, onDestroy } from 'svelte';
+  import { tokenize } from './highlight.js'; 
+  import { leftPad } from './helpers.js';
+  import Toolbar from './Toolbar.svelte';
+  import Tool from './Tool.svelte';
+  import Copy from './Copy.svelte';
   
   /* Properties */
-  export let value = ''
-  export let defaultValue = ''
-  export let showLineNumbers = true
-  export let showResetButton = false
+  export let value = '';
+  export let defaultValue = '';
+  export let showLineNumbers = true;
+  export let showResetButton = false;
   
   /* Elements */
-  let meassure
-  let pre
-  let num
-  let textarea
+  let meassure;
+  let pre;
+  let num;
+  let textarea;
 
   /* Line Numbering */
-  $: leftPadding = (showLineNumbers? lnWidth: 0) + 4
-  let charWidth = 11
+  $: leftPadding = (showLineNumbers? lnWidth: 0) + 4;
+  let charWidth = 11;
   
   /* Selection */
-  let selectionStartChar = -1
-  let selectionEndChar = -1
+  let selectionStartChar = -1;
+  let selectionEndChar = -1;
 
-  $: codeInfo = tokenize(value, selectionStartChar, selectionEndChar)
-  $: lnDigits = codeInfo.lines.toString().length
-  $: lnWidth = lnDigits * charWidth + 12
+  $: codeInfo = tokenize(value, selectionStartChar, selectionEndChar);
+  $: lnDigits = codeInfo.lines.toString().length;
+  $: lnWidth = lnDigits * charWidth + 12;
   
   function updateSelection() {
-    const activeElement = document.activeElement
+    const activeElement = document.activeElement;
   
     // make sure this is your textarea
     if (activeElement === textarea) {
-      selectionStartChar = textarea.selectionStart
-      selectionEndChar = textarea.selectionEnd
+      selectionStartChar = textarea.selectionStart;
+      selectionEndChar = textarea.selectionEnd;
     }
   }
 
   function delayedUpdate() {
     setTimeout(() => {
-      codeInfo = tokenize(textarea.value, selectionStartChar, selectionEndChar)
-    }, 100)
+      codeInfo = tokenize(textarea.value, selectionStartChar, selectionEndChar);
+    }, 100);
   }
 
   function updateScrollPosition() {
-    pre.scrollLeft = textarea.scrollLeft
-    pre.scrollTop = textarea.scrollTop
-    num.scrollTop = textarea.scrollTop
+    pre.scrollLeft = textarea.scrollLeft;
+    pre.scrollTop = textarea.scrollTop;
+    num.scrollTop = textarea.scrollTop;
   }
 
   onMount(function() {
-    charWidth = meassure.clientWidth
-    document.addEventListener('selectionchange', updateSelection)
-  })
+    charWidth = meassure.clientWidth;
+    document.addEventListener('selectionchange', updateSelection);
+  });
 
   onDestroy(function() {
-    document.removeEventListener('selectionchange', updateSelection)
-  })
+    document.removeEventListener('selectionchange', updateSelection);
+  });
   
 </script>
 

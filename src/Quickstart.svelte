@@ -37,11 +37,11 @@
 
 </style>
 <script>
-import ADia from './ADia.svelte'
+import ADia from './ADia.svelte';
 
 /* Properties */
-export let busy = true
-export let loading = true
+export let busy = true;
+export let loading = true;
 
 const sections = [
   {
@@ -133,5 +133,5 @@ bar.title: Bar API
 foo -> bar
 `
   }
-]
+];
 </script>

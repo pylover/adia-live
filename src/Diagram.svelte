@@ -44,24 +44,24 @@ textarea
 
 </style>
 <script>
-import { onMount } from 'svelte'
-import Toolbar from './Toolbar.svelte'
-import Copy from './Copy.svelte'
-import Tool from './Tool.svelte'
+import { onMount } from 'svelte';
+import Toolbar from './Toolbar.svelte';
+import Copy from './Copy.svelte';
+import Tool from './Tool.svelte';
 
 /* Properties */
-export let value
+export let value;
 
 /* Private */
-const maxFontSize = 30
-const minFontSize = 4
-let textarea
-let fontSize 
-let defaultFontSize 
+const maxFontSize = 30;
+const minFontSize = 4;
+let textarea;
+let fontSize; 
+let defaultFontSize; 
 
 onMount(function() {
   defaultFontSize = fontSize = parseInt(
     window.getComputedStyle(textarea).getPropertyValue('font-size')
-  )
-})
+  );
+});
 </script>

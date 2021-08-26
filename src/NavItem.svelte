@@ -19,13 +19,13 @@ export let target;
 export let icon = null;
 export let id = '';
 export let style = '';
-export let current
-let internal = false
+export let current;
+let internal = false;
 
-const { navigate } = getContext('nav')
+const { navigate } = getContext('nav');
 
 function click() {
-  navigate(target)
+  navigate(target);
 }
 
 if (target !== undefined && target.startsWith('/')) {

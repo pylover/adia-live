@@ -6,7 +6,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "./server.py",
-    "lint": "eslint . --ext .js,.svelte --fix"
+    "lint": "eslint . --ext .js,.svelte"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",

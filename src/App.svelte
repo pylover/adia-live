@@ -28,8 +28,8 @@
 <script>
 import { setContext } from 'svelte';
 import Icons from './Icons.svelte';
-import NavItem from './NavItem.svelte'
-import Logo from './Logo.svelte'
+import NavItem from './NavItem.svelte';
+import Logo from './Logo.svelte';
 import ADia from './ADia.svelte';
 import About from './About.svelte';
 import Quickstart from './Quickstart.svelte';
@@ -46,19 +46,19 @@ const routes = {
 const notFound = {
   title: 'Not Found',
   component: NotFound,
-}
+};
 
 let busy = true;
 let loading = true;
-let route
-let current
-export let title
+let route;
+let current;
+export let title;
 
 $: spin = busy;
 
 /* Navigation */
 function softNavigate(target) {
-  current = target
+  current = target;
   route = routes[target];
 
   /* 404 */
@@ -67,13 +67,13 @@ function softNavigate(target) {
   }
 
   /* Set the page title */
-  document.title = `${title} -> ${route.title}`
-  return false
+  document.title = `${title} -> ${route.title}`;
+  return false;
 }
 
 
 function navigate(target) {
-  softNavigate(target)
+  softNavigate(target);
   window.history.pushState({
     target
   }, 
@@ -81,11 +81,11 @@ function navigate(target) {
     `${window.location.origin}basePath${target}`
   );
 }
-setContext('nav', {navigate})
+setContext('nav', {navigate});
 
 /* Match current route */
-current = window.location.pathname.replace(new RegExp('^basePath'), '')
-navigate(current)
+current = window.location.pathname.replace(new RegExp('^basePath'), '');
+navigate(current);
 
 </script>
 

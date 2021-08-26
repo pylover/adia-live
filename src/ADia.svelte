@@ -73,38 +73,38 @@
 </style>
 
 <script>
-  import SourceCode from './SourceCode.svelte'
-  import Diagram from './Diagram.svelte'
-  import { onMount, onDestroy } from 'svelte'
-  import { ADiaWorker } from './adiaworker.js'
-  import Tool from './Tool.svelte'
+  import SourceCode from './SourceCode.svelte';
+  import Diagram from './Diagram.svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import { ADiaWorker } from './adiaworker.js';
+  import Tool from './Tool.svelte';
 
   /* Properties */
-  export let key = 'adia-main'
-  export let busy = true
-  export let loading = true
-  export let persistent = true
-  export let showResetButton = false
-  export let fullscreen = false
+  export let key = 'adia-main';
+  export let busy = true;
+  export let loading = true;
+  export let persistent = true;
+  export let showResetButton = false;
+  export let fullscreen = false;
   
   export let sourceAreaWidth = localGet('sourceAreaWidth') ? 
-    localGet('sourceAreaWidth') : 30
+    localGet('sourceAreaWidth') : 30;
 
-  $: diagramAreaWidth = 100 - sourceAreaWidth 
+  $: diagramAreaWidth = 100 - sourceAreaWidth; 
 
   /* Elements */
-  let sourceArea
-  let left
-  let right
+  let sourceArea;
+  let left;
+  let right;
   
   /* Private variables */
-  let lastSeparatorLocation
-  let innerWidth
-  let leftWidth
+  let lastSeparatorLocation;
+  let innerWidth;
+  let leftWidth;
 
   /* ADia Worker */
-  let diagram = ''
-  let source
+  let diagram = '';
+  let source;
   export let defaultSource = `# Live Demo
 
 diagram: Foo
@@ -127,19 +127,19 @@ sequence: Bye
 
 foo -> bar: Bye() => See U there
   if: baz is there
-    bar -> baz: Bye()`
+    bar -> baz: Bye()`;
 
   function localStore(name, value) {
     if (persistent) {
-      localStorage.setItem(`${key}-${name}`, value)
+      localStorage.setItem(`${key}-${name}`, value);
     }
   }
 
   function localGet(name) {
     if (persistent) {
-      return localStorage.getItem(`${key}-${name}`)
+      return localStorage.getItem(`${key}-${name}`);
     }
-    return null
+    return null;
   }
 
   function resizeStart(e) {
@@ -147,59 +147,59 @@ foo -> bar: Bye() => See U there
       e,
       leftWidth: left.offsetWidth,
       rightWidth: right.offsetWidth,
-    }
-    window.addEventListener('mousemove', resize)
+    };
+    window.addEventListener('mousemove', resize);
   }
   
   function resize (e) {
     if (e.clientX !== lastSeparatorLocation.e.clientX) {
-      let delta = e.clientX - lastSeparatorLocation.e.clientX
+      let delta = e.clientX - lastSeparatorLocation.e.clientX;
       delta = Math.min(Math.max(delta, -lastSeparatorLocation.leftWidth),
-        lastSeparatorLocation.rightWidth)
-      left.style.width = lastSeparatorLocation.leftWidth + delta + 'px'
-      right.style.width = lastSeparatorLocation.rightWidth - delta + 'px'
+        lastSeparatorLocation.rightWidth);
+      left.style.width = lastSeparatorLocation.leftWidth + delta + 'px';
+      right.style.width = lastSeparatorLocation.rightWidth - delta + 'px';
     }
   }
 
   function resizeStop () {
     localStore('sourceAreaWidth', 
-      Math.round(leftWidth / (innerWidth - 14) * 100))
-    window.removeEventListener('mousemove', resize)
+      Math.round(leftWidth / (innerWidth - 14) * 100));
+    window.removeEventListener('mousemove', resize);
   }
 
   $: if (source != undefined) {
-    aDia.go()
+    aDia.go();
   }
   
   /* ADia configuration */
-  const aDia = new ADiaWorker(key)
-  aDia.delay = 300
+  const aDia = new ADiaWorker(key);
+  aDia.delay = 300;
   aDia.oninit = () => {
-    loading = false
-  }
+    loading = false;
+  };
   aDia.onstatus = (aDia, state) => {
-    busy = state != 'idle'
+    busy = state != 'idle';
   };
   aDia.input = () => {
-    localStore('editorText', source)
-    return source
-  }
+    localStore('editorText', source);
+    return source;
+  };
   aDia.onresult = () => diagram = '',
-  aDia.onerror = (aDia, err) => diagram = err
-  aDia.onsuccess = (aDia, dia) => diagram = dia
+  aDia.onerror = (aDia, err) => diagram = err;
+  aDia.onsuccess = (aDia, dia) => diagram = dia;
 
   onMount(async function() {
-    let localText = localGet('editorText')
+    let localText = localGet('editorText');
     if (localText != null && localText.trim().length > 0) {
-      source = localText
+      source = localText;
     }
     else {
-      source = defaultSource
+      source = defaultSource;
     }
-  })
+  });
 
   onDestroy(async function() {
-    aDia.cleanup()
-  })
+    aDia.cleanup();
+  });
 </script>
 

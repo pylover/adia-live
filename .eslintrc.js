@@ -26,7 +26,7 @@ module.exports = {
     }
   ],
   rules: {
-    // ...
+    'semi': ['error', 'always']
   },
   settings: {
     'svelte3/ignore-styles': () => true

@@ -74,8 +74,8 @@
 
 </style>
 <script>
-import { onMount, onDestroy } from 'svelte'
-import { ADiaWorker } from './adiaworker.js'
+import { onMount, onDestroy } from 'svelte';
+import { ADiaWorker } from './adiaworker.js';
 
 const repos = [
   'https://github.com/pylover/adia',
@@ -83,8 +83,8 @@ const repos = [
 ];
 
 /* Properties */
-export let busy = true
-export let loading = true
+export let busy = true;
+export let loading = true;
 
 let loadingError;
 let jsDists = [];
@@ -102,21 +102,21 @@ onMount(async () => {
     docDists = doc;
   }
   catch (err) {
-    loadingError = `Index loading error: ${err}`
+    loadingError = `Index loading error: ${err}`;
   }
   finally {
-    loading = false
+    loading = false;
   }
 });
 
 /* ADia configuration */
-const aDia = new ADiaWorker('about-page')
+const aDia = new ADiaWorker('about-page');
 aDia.oninit = (adia) => {
-  adiaVer = adia.__version__
-  busy = false
-}
+  adiaVer = adia.__version__;
+  busy = false;
+};
 
 onDestroy(async function() {
-  aDia.cleanup()
-})
+  aDia.cleanup();
+});
 </script>

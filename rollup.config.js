@@ -38,7 +38,7 @@ const warnIgnores = {
       /^(a|button) svg$/,
     ]
   }
-}
+};
 
 
 function serve() {

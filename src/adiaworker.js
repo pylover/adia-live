@@ -18,17 +18,17 @@ export class ADiaWorker {
   #_delayTimer;
 
   constructor(key) {
-    this.key = key
+    this.key = key;
     this.ensureADiaAPI();
   }
   
   hook(name, data) {
-    let handler = this[name]
+    let handler = this[name];
     if (handler === undefined) {
       throw `Invalid hook name: ${name}`;
     }
     if (handler == null) {
-      return
+      return;
     }
     
     handler(this, data);
@@ -49,12 +49,12 @@ export class ADiaWorker {
       return;
     }
     
-    window.__adia__.registerCallback(this.key, this.onResult.bind(this))
+    window.__adia__.registerCallback(this.key, this.onResult.bind(this));
     window.__adia__.send(this.key, '?version');
   }
   
   cleanup() {
-    window.__adia__.unregisterCallback(this.key)
+    window.__adia__.unregisterCallback(this.key);
   }
 
   send() {
@@ -74,7 +74,7 @@ export class ADiaWorker {
 
   go() {
     if (this.status != 'idle') {
-      return
+      return;
     }
 
     if (this.delay > 0) {
@@ -88,16 +88,16 @@ export class ADiaWorker {
   
   onResult(result) {
     if (result.type ==  'version') {
-      this.__version__ = result.answer
-      this.hook('oninit')
+      this.__version__ = result.answer;
+      this.hook('oninit');
     }
     else {
-      this.hook('onresult', result)
+      this.hook('onresult', result);
       if (result.error) {
-        this.hook('onerror', result.error)
+        this.hook('onerror', result.error);
       }
       else {
-        this.hook('onsuccess', result.answer)
+        this.hook('onsuccess', result.answer);
       }
     }
     this.status = 'idle';

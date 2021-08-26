@@ -1,9 +1,9 @@
 <script>
 import { getContext } from 'svelte';
 
-const { navigate } = getContext('nav')
+const { navigate } = getContext('nav');
 
-export let spin = true
+export let spin = true;
 
 </script>
 <button on:click={() => navigate('/')}>

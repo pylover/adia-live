@@ -14,14 +14,14 @@
   
 </style>
 <script>
-import { onMount } from 'svelte'
+import { onMount } from 'svelte';
 
 /* Properties */
-export let busy = true
-export let loading = true
+export let busy = true;
+export let loading = true;
 
 onMount(function() {
-  loading = false
-  busy = false
-})
+  loading = false;
+  busy = false;
+});
 </script>

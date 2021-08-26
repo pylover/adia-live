@@ -11,6 +11,27 @@ jobs:
     - name: Install dependencies
       run: |
         make env
+    - name: Lint
+      run: make lint
+    - name: Build
+      run: |
+        make build
+        ln -s index.html public/404.html
+        touch public/.nojekyll 
+    - name: Deploy to gh-pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        token: ${{ secrets.PAT }}
+        branch: gh-pages
+        folder: public
+        clean: false
+        repository-name: pylover/adia
+        clean-exclude: |
+          jsdist/*
+          docs/*
+
+
+ 
     - name: Build
       run: |
         make build
