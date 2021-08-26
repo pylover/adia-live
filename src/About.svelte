@@ -42,8 +42,10 @@
     {/each}
   </ul>
   <div class="all10" style="display: {oldDocs.length? 'block': 'none'}">
-    <button on:click={() => {docs = docs.concat(oldDocs);
-      oldDocs = []}}>show older</button>
+    <button on:click={() => {
+      docs = docs.concat(oldDocs); 
+      oldDocs = [];
+    }}>show older</button>
   </div>
   <h2 class="all10">
     Javascript releases
@@ -62,8 +64,10 @@
   {/each}
   </ul>
   <div class="all10" style="display: {oldJsDists.length? 'block': 'none'}">
-    <button on:click={() => {jsDists = jsDists.concat(oldJsDists);
-      oldJsDists = []}}>show older</button>
+    <button on:click={() => {
+      jsDists = jsDists.concat(oldJsDists);
+      oldJsDists = [];
+    }}>show older</button>
   </div>
 
   <!--
