@@ -9,7 +9,7 @@
       <ADia 
          key={section.title}
          persistent={false} 
-         sourceAreaWidth="50" 
+         sourceAreaWidth="33" 
          defaultSource={section.source}
          bind:loading
          bind:busy
