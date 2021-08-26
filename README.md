@@ -23,10 +23,12 @@ make env
 ...then start the development server.
 
 ```bash
+make lint
 make serve
 ```
 
 ## Contribution rules
 
+- Lint before commit
 - Maximum line width: 79 characters.
 - Single qoute for string literals: `'` (`'foo'`)

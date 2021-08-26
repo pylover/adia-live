@@ -13,22 +13,38 @@
     <i>version: { adiaVer }<i>
   </p>
   <h2 class="all10">
+    Source Codes
+    <hr />
+  </h2>
+  <div class="all10">
+    <ul>
+      {#each repos as repo}
+        <li>
+          <a href="{repo}">{repo}</a>
+        </li>
+      {/each}
+    </ul>
+  </div>
+  <h2 class="all10">
     Documentation
     <hr />
   </h2>
   <ul class="all10">
-  {#each docDists as v, i}
-    <li>
-      <a href="basePath/docs/{i == 0? 'latest': v}/html/">
-        v{v}
-        {#if i == 0}
-          <i> (latest) </i>
-        {/if}
-      </a>
-    </li>
-  {/each}
+    {#each docs as v, i}
+      <li>
+        <a href="basePath/docs/{i == 0? 'latest': v}/html/">
+          v{v}
+          {#if i == 0}
+            <i> (latest) </i>
+          {/if}
+        </a>
+      </li>
+    {/each}
   </ul>
-
+  <div class="all10" style="display: {oldDocs.length? 'block': 'none'}">
+    <button on:click={() => {docs = docs.concat(oldDocs);
+      oldDocs = []}}>show older</button>
+  </div>
   <h2 class="all10">
     Javascript releases
     <hr />
@@ -45,20 +61,11 @@
     </li>
   {/each}
   </ul>
-
-  <h2 class="all10">
-    Source Codes
-    <hr />
-  </h2>
-  <div class="all10">
-    <ul>
-      {#each repos as repo}
-        <li>
-          <a href="{repo}">{repo}</a>
-        </li>
-      {/each}
-    </ul>
+  <div class="all10" style="display: {oldJsDists.length? 'block': 'none'}">
+    <button on:click={() => {jsDists = jsDists.concat(oldJsDists);
+      oldJsDists = []}}>show older</button>
   </div>
+
   <!--
   {#if loadingError}
     <div>
@@ -88,18 +95,22 @@ export let loading = true;
 
 let loadingError;
 let jsDists = [];
-let docDists = [];
+let oldJsDists = [];
+let docs = [];
+let oldDocs = [];
 let adiaVer = 'loading...';
-
 
 onMount(async () => {
   try {
     let [js, doc] = await Promise.all([
-      fetch('basePath/jsdist/index.json?count=11').then(resp => resp.json()),
-      fetch('basePath/docs/index.json?count=19').then(resp => resp.json()),
+      fetch('basePath/jsdist/index.json?count=17').then(resp => resp.json()),
+      fetch('basePath/docs/index.json?count=9').then(resp => resp.json()),
     ]);
-    jsDists = js;
-    docDists = doc;
+    jsDists = js.slice(0, 8);
+    oldJsDists = js.slice(8);
+
+    docs = doc.slice(0, 8);
+    oldDocs = doc.slice(8);
   }
   catch (err) {
     loadingError = `Index loading error: ${err}`;
