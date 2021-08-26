@@ -3,9 +3,17 @@
   bind:this={meassure}
   >X</span>
 <div id="sourceParent">
+  <Toolbar>
+    <Tool 
+     icon="numbers" 
+     title="{showLineNumbers? 'Hide': 'Show'} Line numbering"
+     enabled={showLineNumbers}
+     on:click={() => showLineNumbers = !showLineNumbers}
+     />
+  </Toolbar>
   <pre
     class="highlight"
-    style="padding-left: { lnWidth + leftPadding }px"
+    style="padding-left: { leftPadding }px"
     bind:this={pre}
   >
   {#each codeInfo.tokens as token}
@@ -14,22 +22,24 @@
     >{token.text}</span>
   {/each}
   </pre>
-  <div 
-    class="numbers" 
-    style="width: { lnWidth }px"
-    bind:this={num}
-  >
-    {#each [...Array(codeInfo.lines).keys()] as l}
-      <span
-        class={(l >= codeInfo.selectionStartLine) && (l <=
-        codeInfo.selectionEndLine)? 'selected': ''}
-      >{ leftPad(l + 1, lnDigits, ' ') }</span>
-    {/each}
-  </div>
+  {#if showLineNumbers}
+    <div 
+      class="numbers" 
+      style="width: { lnWidth }px"
+      bind:this={num}
+    >
+      {#each [...Array(codeInfo.lines).keys()] as l}
+        <span
+          class={(l >= codeInfo.selectionStartLine) && (l <=
+          codeInfo.selectionEndLine)? 'selected': ''}
+        >{ leftPad(l + 1, lnDigits, ' ') }</span>
+      {/each}
+    </div>
+  {/if}
   <textarea
     spellcheck="false"
     wrap="off"
-    style="padding-left: { lnWidth + leftPadding }px"
+    style="padding-left: { leftPadding }px"
     bind:value={value}
     bind:this={textarea}
     on:scroll={updateScrollPosition}
@@ -41,9 +51,13 @@
   import { onMount, onDestroy } from 'svelte'
   import { tokenize } from './highlight.js' 
   import { leftPad } from './helpers.js'
+  import Toolbar from './Toolbar.svelte'
+  import Tool from './Tool.svelte'
   
+  /* Properties */
   export let value = ''
-
+  export let showLineNumbers = true
+  
   /* Elements */
   let meassure
   let pre
@@ -52,7 +66,7 @@
 
   /* Line Numbering */
   const lineHeight = 20
-  let leftPadding = 4
+  $: leftPadding = (showLineNumbers? lnWidth: 0) + 4
   let charWidth = 11
   
   /* Selection */
@@ -113,16 +127,21 @@ textarea
   resize: none
 
 textarea,
-pre
-  overflow-x: auto
+pre,
+.numbers
   position: absolute
-  top: 0px
+  top: $toolheight
   left: 0px
+  height: calc(100% - #{$toolheight})
+  overflow-x: auto
+  line-height: $lineheight
+
+
+textarea,
+pre
   width: 100%
-  height: 100%
   z-index: 8
   border: none
-  line-height: $lineheight
   font-size: $fontsize
   vertical-align: baseline
 
@@ -133,15 +152,9 @@ pre
     background: none 
  
 .numbers
-  overflow-x: auto
-  position: absolute
-  top: 0px
-  left: 0px
-  height: 100%
   z-index: 10
   font-size: $fontsize - 2
   color: $mangool
-  line-height: $lineheight
   scrollbar-width: none;  /* Firefox */
   &::-webkit-scrollbar
     display: none;
