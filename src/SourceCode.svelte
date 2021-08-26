@@ -18,6 +18,7 @@
        on:click={() => value = defaultValue}
        />
     {/if}
+    <Copy value={value} />
   </Toolbar>
   <pre
     class="highlight"
@@ -61,6 +62,7 @@
   import { leftPad } from './helpers.js'
   import Toolbar from './Toolbar.svelte'
   import Tool from './Tool.svelte'
+  import Copy from './Copy.svelte'
   
   /* Properties */
   export let value = ''
