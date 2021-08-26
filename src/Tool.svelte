@@ -1,6 +1,7 @@
 <button 
   on:click
   title={title}
+  style={far? 'float: right': ''}
   class={enabled? 'enabled': ''}
   >
   <svg><use xlink:href={"#icon-" + icon}></use></svg>
@@ -9,7 +10,7 @@
 export let title;
 export let icon;
 export let enabled = false;
-
+export let far = false
 </script>
 <style lang="sass" type="text/sass">
 

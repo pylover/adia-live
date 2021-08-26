@@ -1,5 +1,5 @@
 <svelte:window bind:innerWidth />
-<div class="main">
+<div class="main" class:fullscreen >
   <div
     bind:this={left}
     bind:clientWidth={leftWidth}
@@ -24,9 +24,53 @@
     style="--right-size: {diagramAreaWidth}%"
     class="right"
   >
-  <Diagram value={diagram}/>
+  <Diagram value={diagram}>
+    <Tool 
+     far="false"
+     icon={fullscreen? 'shrink': 'enlarge'}
+     title="{fullscreen? 'Exit ': ''}Fullscreen Mode"
+     on:click={() => fullscreen = !fullscreen}
+     />
+  </Diagram>
   </div>
 </div>
+
+<style type="text/sass" scoped>
+
+.main
+  display: inline-flex
+  height: calc(100% - #{$gutter})
+  width: 100%
+
+.separator
+  cursor: col-resize
+  height: 100%
+  width: $gutter
+  z-index: 1
+
+.left
+  width: var(--left-size)
+  min-width: 100px
+  height: 100%
+
+.right
+  width: var(--right-size)
+  min-width: 100px
+  height: 100%
+  background-color: $bg-light
+  overflow-y: auto
+  overflow-x: hidden
+
+.fullscreen
+  position: fixed
+  top: 0px
+  left: 0px
+  right: 0px
+  height: 100%
+  bottom: 0px
+  z-index: 50
+  background-color: $bg-light
+</style>
 
 <script>
   import NavItem from './NavItem.svelte'
@@ -34,6 +78,7 @@
   import Diagram from './Diagram.svelte'
   import { onMount, onDestroy } from 'svelte'
   import { ADiaWorker } from './adiaworker.js'
+  import Tool from './Tool.svelte'
 
   /* Properties */
   export let key = 'adia-main'
@@ -41,6 +86,7 @@
   export let loading = true
   export let persistent = true
   export let showResetButton = false
+  export let fullscreen = false
   
   export let sourceAreaWidth = localGet('sourceAreaWidth') ? 
     localGet('sourceAreaWidth') : 30
@@ -51,7 +97,8 @@
   let sourceArea
   let left
   let right
-
+  
+  /* Private variables */
   let lastSeparatorLocation
   let innerWidth
   let leftWidth
@@ -124,7 +171,10 @@ foo -> bar: Bye() => See U there
   $: if (source != undefined) {
     aDia.go()
   }
-
+  
+  $: if (fullscreen) {
+    
+  }
   /* ADia configuration */
   const aDia = new ADiaWorker(key)
   aDia.delay = 300
@@ -156,32 +206,4 @@ foo -> bar: Bye() => See U there
     aDia.cleanup()
   })
 </script>
-
-<style type="text/sass" scoped>
-
-.main
-  display: inline-flex
-  height: calc(100% - #{$gutter})
-  width: 100%
-
-.separator
-  cursor: col-resize
-  height: 100%
-  width: $gutter
-  z-index: 1
-
-.left
-  width: var(--left-size)
-  min-width: 100px
-  height: 100%
-
-.right
-  width: var(--right-size)
-  min-width: 100px
-  height: 100%
-  background-color: $bg-light
-  overflow-y: auto
-  overflow-x: hidden
-
-</style>
 
