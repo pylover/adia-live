@@ -74,7 +74,6 @@
 
 </style>
 <script>
-import NavItem from './NavItem.svelte'
 import { onMount, onDestroy } from 'svelte'
 import { ADiaWorker } from './adiaworker.js'
 

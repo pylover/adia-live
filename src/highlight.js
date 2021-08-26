@@ -69,7 +69,7 @@ const patterns = [
   },
   {
     name: 'op',
-    pattern: /[:!\$%\^&*\(\)+=_\]\[\}\{;"'?/\\<>,~-]/,
+    pattern: /[:!$%^&*)(+=_][}{;"'?/\\<>,~-]/,
   },
   {
     name: 'whitespace',

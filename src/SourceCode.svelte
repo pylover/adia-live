@@ -77,7 +77,6 @@
   let textarea
 
   /* Line Numbering */
-  const lineHeight = 20
   $: leftPadding = (showLineNumbers? lnWidth: 0) + 4
   let charWidth = 11
   

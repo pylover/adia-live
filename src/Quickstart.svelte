@@ -37,7 +37,6 @@
 
 </style>
 <script>
-import { onMount } from 'svelte'
 import ADia from './ADia.svelte'
 
 /* Properties */

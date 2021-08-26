@@ -73,19 +73,16 @@ export class ADiaWorker {
   }
 
   go() {
-    switch (this.status) {
-      case 'idle':
-        if (this.delay > 0) {
-          clearTimeout(this.#_delayTimer);
-          this.#_delayTimer = setTimeout(this.send.bind(this), this.delay);
-        }
-        else {
-          this.send();
-        }
-      case 'initializing':
-      case 'processing':
-        /* Do nothing, initializer and fee will call me again. */
-        break;
+    if (this.status != 'idle') {
+      return
+    }
+
+    if (this.delay > 0) {
+      clearTimeout(this.#_delayTimer);
+      this.#_delayTimer = setTimeout(this.send.bind(this), this.delay);
+    }
+    else {
+      this.send();
     }
   }
   

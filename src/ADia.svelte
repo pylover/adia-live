@@ -73,7 +73,6 @@
 </style>
 
 <script>
-  import NavItem from './NavItem.svelte'
   import SourceCode from './SourceCode.svelte'
   import Diagram from './Diagram.svelte'
   import { onMount, onDestroy } from 'svelte'
@@ -136,7 +135,7 @@ foo -> bar: Bye() => See U there
     }
   }
 
-  function localGet(name, value) {
+  function localGet(name) {
     if (persistent) {
       return localStorage.getItem(`${key}-${name}`)
     }
@@ -172,9 +171,6 @@ foo -> bar: Bye() => See U there
     aDia.go()
   }
   
-  $: if (fullscreen) {
-    
-  }
   /* ADia configuration */
   const aDia = new ADiaWorker(key)
   aDia.delay = 300
