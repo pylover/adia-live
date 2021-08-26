@@ -10,6 +10,14 @@
      enabled={showLineNumbers}
      on:click={() => showLineNumbers = !showLineNumbers}
      />
+    {#if showResetButton}
+      <Tool 
+       icon="reset" 
+       title="Reset"
+       enabled={value == defaultValue}
+       on:click={() => value = defaultValue}
+       />
+    {/if}
   </Toolbar>
   <pre
     class="highlight"
@@ -56,7 +64,9 @@
   
   /* Properties */
   export let value = ''
+  export let defaultValue = ''
   export let showLineNumbers = true
+  export let showResetButton = false
   
   /* Elements */
   let meassure

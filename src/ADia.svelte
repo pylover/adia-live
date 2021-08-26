@@ -8,6 +8,8 @@
     <SourceCode 
       bind:this={sourceArea} 
       bind:value={source} 
+      defaultValue={defaultSource}
+      showResetButton={showResetButton}
     />
   </div>
   
@@ -42,6 +44,7 @@
   export let busy = true
   export let loading = true
   export let persistent = true
+  export let showResetButton = false
   
   export let sourceAreaWidth = localGet('sourceAreaWidth') ? 
     localGet('sourceAreaWidth') : 30

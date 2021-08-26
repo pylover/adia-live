@@ -22,7 +22,7 @@ button
   box-shadow: inset 0 0 1px #0f0; 
   &.enabled
     svg
-      fill: orange
+      fill: $mangool
 
   svg
     width: $toolheight - $gutter

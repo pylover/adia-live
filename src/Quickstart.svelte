@@ -13,6 +13,7 @@
          defaultSource={section.source}
          bind:loading
          bind:busy
+         showResetButton={true}
          />
     </div>
   {/each}
