@@ -1,4 +1,6 @@
 <Toolbar>
+  <SaveFile value={value}
+            defaultName={'diagram'}/>
   <Copy value={value} />
   <Tool 
    icon="zoom-in" 
@@ -48,6 +50,7 @@ import { onMount } from 'svelte';
 import Toolbar from './Toolbar.svelte';
 import Copy from './Copy.svelte';
 import Tool from './Tool.svelte';
+import SaveFile from './SaveFile.svelte';
 
 /* Properties */
 export let value;
