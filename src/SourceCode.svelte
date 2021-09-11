@@ -18,6 +18,8 @@
        on:click={() => value = defaultValue}
        />
     {/if}
+    <SaveFile value={value}
+              defaultName={'sourceCode'}/>
     <Copy value={value} />
   </Toolbar>
   <pre
@@ -63,6 +65,7 @@
   import Toolbar from './Toolbar.svelte';
   import Tool from './Tool.svelte';
   import Copy from './Copy.svelte';
+  import SaveFile from './SaveFile.svelte';
   
   /* Properties */
   export let value = '';
