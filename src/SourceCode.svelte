@@ -18,8 +18,17 @@
        on:click={() => value = defaultValue}
        />
     {/if}
-    <SaveFile value={value}
-              defaultName={'sourceCode'}/>
+
+    <Tool 
+      icon="open" 
+      title="Open file"
+      enabled={value == defaultValue}
+      on:click={()=>{fileInput.click();}}
+      />
+    <SaveFile 
+      value={value}
+      defaultName={'sourceCode'}
+      />
     <Copy value={value} />
   </Toolbar>
   <pre
@@ -57,6 +66,12 @@
     on:keyup={updateSelection}
     on:change={delayedUpdate}
     ></textarea>
+
+  <input style="display:none"
+    type="file"
+    accept=".txt, .adia"
+    on:change={(e)=>onFileSelected(e)}
+    bind:this={fileInput} >
 </div>
 <script>
   import { onMount, onDestroy } from 'svelte';
@@ -78,6 +93,7 @@
   let pre;
   let num;
   let textarea;
+  let fileInput;
 
   /* Line Numbering */
   $: leftPadding = (showLineNumbers? lnWidth: 0) + 4;
@@ -121,6 +137,16 @@
   onDestroy(function() {
     document.removeEventListener('selectionchange', updateSelection);
   });
+
+  function onFileSelected (e) {
+    let fileContent = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsText(fileContent);
+    reader.onload = e => {
+      localStorage.setItem("editorText", e.target.result);
+      value = e.target.result;
+    };
+  }
   
 </script>
 
