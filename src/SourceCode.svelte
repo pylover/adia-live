@@ -18,11 +18,16 @@
        on:click={() => value = defaultValue}
        />
     {/if}
+
     <Tool 
       icon="open" 
       title="Open file"
       enabled={value == defaultValue}
       on:click={()=>{fileInput.click();}}
+      />
+    <SaveFile 
+      value={value}
+      defaultName={'sourceCode'}
       />
     <Copy value={value} />
   </Toolbar>
@@ -75,6 +80,7 @@
   import Toolbar from './Toolbar.svelte';
   import Tool from './Tool.svelte';
   import Copy from './Copy.svelte';
+  import SaveFile from './SaveFile.svelte';
   
   /* Properties */
   export let value = '';
