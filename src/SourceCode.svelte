@@ -22,8 +22,7 @@
     <Tool 
       icon="open" 
       title="Open file"
-      enabled={value == defaultValue}
-      on:click={()=>{fileInput.click();}}
+      on:click={() => fileInput.click()}
       />
     <SaveFile 
       getFileInfo={() => [value, suggestFilename()]}
@@ -66,10 +65,10 @@
     on:change={delayedUpdate}
     ></textarea>
 
-  <input style="display:none"
+  <input style="display: none"
     type="file"
     accept=".txt, .adia"
-    on:change={(e)=>onFileSelected(e)}
+    on:change={onFileSelected}
     bind:this={fileInput} >
 </div>
 <script>
@@ -142,8 +141,9 @@
     let reader = new FileReader();
     reader.readAsText(fileContent);
     reader.onload = e => {
-      localStorage.setItem("editorText", e.target.result);
-      value = e.target.result;
+      if (confirm('Are you sure to discard the current source code?')) {
+        value = e.target.result;
+      }
     };
   }
   
@@ -153,7 +153,7 @@
     if (m) {
       let name = m[1].trim();
       if (name) {
-        filename = m[1];
+        filename = name;
       }
     }
     
