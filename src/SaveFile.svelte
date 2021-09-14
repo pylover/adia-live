@@ -14,6 +14,7 @@
     const [content, filename] = getFileInfo();
     const url = URL.createObjectURL(new Blob([content]));
     const link = document.createElement('a');
+    link.style = "display: none";
     link.href = url;
     link.setAttribute('download', pureFilename(filename));
     document.body.appendChild(link);
