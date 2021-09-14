@@ -19,11 +19,14 @@
        />
     {/if}
 
+    {#if showOpenButton}
     <Tool 
       icon="open" 
       title="Open file"
       on:click={() => fileInput.click()}
       />
+    {/if}
+
     <SaveFile 
       getFileInfo={() => [value, suggestFilename()]}
       />
@@ -85,6 +88,7 @@
   export let defaultValue = '';
   export let showLineNumbers = true;
   export let showResetButton = false;
+  export let showOpenButton = true;
   
   /* Elements */
   let meassure;

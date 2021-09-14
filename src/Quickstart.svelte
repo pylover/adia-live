@@ -14,6 +14,7 @@
          bind:loading
          bind:busy
          showResetButton={true}
+         showOpenButton={false}
          />
     </div>
   {/each}

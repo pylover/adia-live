@@ -10,6 +10,7 @@
       bind:value={source} 
       defaultValue={defaultSource}
       showResetButton={showResetButton}
+      showOpenButton={showOpenButton}
     />
   </div>
   
@@ -85,6 +86,7 @@
   export let loading = true;
   export let persistent = true;
   export let showResetButton = false;
+  export let showOpenButton = true;
   export let fullscreen = false;
   
   export let sourceAreaWidth = localGet('sourceAreaWidth') ? 
