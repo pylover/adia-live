@@ -1,5 +1,5 @@
 <Tool 
- icon="save" 
+ icon="download" 
  title="Download"
  on:click={downloadFile}
  />
