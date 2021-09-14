@@ -26,8 +26,7 @@
       on:click={()=>{fileInput.click();}}
       />
     <SaveFile 
-      value={value}
-      defaultName={'sourceCode'}
+      getFileInfo={() => [value, suggestFilename()]}
       />
     <Copy value={value} />
   </Toolbar>
@@ -148,6 +147,18 @@
     };
   }
   
+  function suggestFilename() {
+    let m = value.match(/diagram *: *(.+)(?=$)/mi);
+    let filename = 'untitled';
+    if (m) {
+      let name = m[1].trim();
+      if (name) {
+        filename = m[1];
+      }
+    }
+    
+    return filename + '_src.txt';
+  }
 </script>
 
 <style type="text/sass">

@@ -1,6 +1,5 @@
 <Toolbar>
-  <SaveFile value={value}
-            defaultName={'diagram'}/>
+  <SaveFile getFileInfo={() => [value, suggestFilename()]} />
   <Copy value={value} />
   <Tool 
    icon="zoom-in" 
@@ -46,25 +45,39 @@ textarea
 
 </style>
 <script>
-import { onMount } from 'svelte';
-import Toolbar from './Toolbar.svelte';
-import Copy from './Copy.svelte';
-import Tool from './Tool.svelte';
-import SaveFile from './SaveFile.svelte';
+  import { onMount } from 'svelte';
+  import Toolbar from './Toolbar.svelte';
+  import Copy from './Copy.svelte';
+  import Tool from './Tool.svelte';
+  import SaveFile from './SaveFile.svelte';
+  
+  /* Properties */
+  export let value;
+  
+  /* Private */
+  const maxFontSize = 30;
+  const minFontSize = 4;
+  let textarea;
+  let fontSize; 
+  let defaultFontSize; 
+  
+  onMount(function() {
+    defaultFontSize = fontSize = parseInt(
+      window.getComputedStyle(textarea).getPropertyValue('font-size')
+    );
+  });
 
-/* Properties */
-export let value;
-
-/* Private */
-const maxFontSize = 30;
-const minFontSize = 4;
-let textarea;
-let fontSize; 
-let defaultFontSize; 
-
-onMount(function() {
-  defaultFontSize = fontSize = parseInt(
-    window.getComputedStyle(textarea).getPropertyValue('font-size')
-  );
-});
+  function suggestFilename() {
+    let m = value.match(/diagram *: *(.+)(?=$)/mi);
+    let filename = 'untitled';
+    if (m) {
+      let name = m[1].trim();
+      if (name) {
+        filename = m[1];
+      }
+    }
+    
+    return filename + '_diagram.txt';
+  }
+ 
 </script>
