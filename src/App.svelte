@@ -89,7 +89,7 @@ navigate(current);
 
 </script>
 
-<style lang="sass" type="text/sass" global>
+<style lang="sass" global>
 body
   height: 100%
   color: $fg

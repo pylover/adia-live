@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from yhttp import Application, json, validate, statuses
+from yhttp.core import Application, json, statuses
 
 
 app = Application()

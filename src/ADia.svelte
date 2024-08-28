@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<style type="text/sass" scoped>
+<style lang="sass" scoped>
 
 .main
   display: inline-flex

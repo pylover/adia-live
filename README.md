@@ -12,7 +12,7 @@ https://pylover.github.io/adia.
 
 Install the dependencies.
 
-You need the `nodejs`, `python3` and `pip3` to install the 
+You need the `nodejs >= 16`, `python3` and `pip3` to install the 
 [yhttp](https://github.com/yhttp/yhttp) which required by the ``server.py``.
 
 

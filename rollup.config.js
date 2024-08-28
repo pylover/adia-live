@@ -79,7 +79,10 @@ export default {
       preprocess: preprocess({
         sass: {
           sourceMap: !production,
-          prependData: `@import './styles/global.sass';`
+          prependData: `
+            @use 'sass:math'
+            @import './styles/global.sass'
+          `
         }
       }),
       // Explicitely ignore warnings

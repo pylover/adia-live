@@ -33,7 +33,7 @@ if (target !== undefined && target.startsWith('/')) {
 }
 
 </script>
-<style lang="sass" type="text/sass">
+<style lang="sass">
 
 a
   float: right

@@ -30,7 +30,7 @@
 </div>
 <div class="sm0 md0 lg1 xg1"></div>
 
-<style type="text/sass" scoped>
+<style lang="sass" scoped>
   @import 'styles/grid'
   
   .adia

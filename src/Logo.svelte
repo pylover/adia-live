@@ -14,7 +14,7 @@ export let spin = true;
   </svg>
   <h4>ADia</h4>
 </button>
-<style lang="sass" type="text/sass" scoped>
+<style lang="sass" scoped>
 
 button
   height: $navheight
@@ -39,8 +39,10 @@ button
       animation-iteration-count: 1
 
 @keyframes go
-    to      { transform: rotate(0deg); }
-    from    { transform: rotate(360deg); }
+  to      
+    transform: rotate(0deg)
+  from    
+    transform: rotate(360deg)
 
 
 </style> 

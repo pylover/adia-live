@@ -30,7 +30,7 @@
   style="font-size: {fontSize? fontSize + 'px': 'inherit'}"
   disabled></textarea>
 
-<style type="text/sass">
+<style lang="sass">
   
 textarea
   display: block

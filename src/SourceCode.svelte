@@ -165,7 +165,7 @@
   }
 </script>
 
-<style type="text/sass">
+<style lang="sass">
 
 #sourceParent
   width: 100%
@@ -210,9 +210,9 @@ pre
   z-index: 10
   font-size: $fontsize - 2
   color: $mangool
-  scrollbar-width: none;  /* Firefox */
+  scrollbar-width: none  /* Firefox */
   &::-webkit-scrollbar
-    display: none;
+    display: none
   span
     float: left 
     clear: both

@@ -2,7 +2,7 @@
   <slot></slot>
 </div>
 
-<style type="text/sass">
+<style lang="sass">
   .toolbar
     background: $bg-dark
     height: $toolheight
